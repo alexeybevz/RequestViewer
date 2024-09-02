@@ -10,10 +10,12 @@ namespace RequestViewer.WPF
     public partial class App : Application
     {
         private readonly SelectedRequestStore _selectedRequestStore;
+        private readonly RequestsStore _requestsStore;
 
         public App()
         {
-            _selectedRequestStore = new SelectedRequestStore();
+            _requestsStore = new RequestsStore(null, null, null, null);
+            _selectedRequestStore = new SelectedRequestStore(_requestsStore);
         }
 
         protected override void OnStartup(StartupEventArgs e)
