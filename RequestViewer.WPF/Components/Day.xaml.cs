@@ -3,11 +3,11 @@
 namespace RequestViewer.WPF.Components
 {
     /// <summary>
-    /// Логика взаимодействия для DatesInMonth.xaml
+    /// Логика взаимодействия для Day.xaml
     /// </summary>
-    public partial class DatesInMonth : UserControl
+    public partial class Day : UserControl
     {
-        public DatesInMonth()
+        public Day()
         {
             InitializeComponent();
         }
