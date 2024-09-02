@@ -1,4 +1,5 @@
-﻿using RequestViewer.WPF.ViewModels;
+﻿using RequestViewer.WPF.Stores;
+using RequestViewer.WPF.ViewModels;
 using System.Windows;
 
 namespace RequestViewer.WPF
@@ -8,10 +9,17 @@ namespace RequestViewer.WPF
     /// </summary>
     public partial class App : Application
     {
+        private readonly SelectedRequestStore _selectedRequestStore;
+
+        public App()
+        {
+            _selectedRequestStore = new SelectedRequestStore();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel();
+            MainWindow.DataContext = new MainViewModel(_selectedRequestStore);
             MainWindow.Show();
 
             base.OnStartup(e);
