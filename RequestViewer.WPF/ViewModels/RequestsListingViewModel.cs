@@ -1,57 +1,108 @@
 ﻿using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Stores;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace RequestViewer.WPF.ViewModels
 {
     public class RequestsListingViewModel : ViewModelBase
     {
-        private ObservableCollection<Request> _requests;
-        public ObservableCollection<Request> Requests
-        {
-            get { return _requests; }
-            set { _requests = value; OnPropertyChanged(nameof(Requests)); }
-        }
-
-        private Request _selectedRequest;
         private readonly SelectedRequestStore _selectedRequestStore;
+        private readonly RequestsStore _requestsStore;
+        private ObservableCollection<RequestsListingItemViewModel> _requestsListingItemViewModels;
 
-        public Request SelectedRequest
+        public ObservableCollection<RequestsListingItemViewModel> RequestsListingItemViewModels => _requestsListingItemViewModels;
+
+        public RequestsListingItemViewModel SelectedRequestsListingItemViewModel
         {
-            get { return _selectedRequest; }
+            get
+            {
+                return _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == _selectedRequestStore.SelectedRequest?.Id);
+            }
             set {
-                _selectedRequest = value;
-                _selectedRequestStore.SelectedRequest = value;
+                _selectedRequestStore.SelectedRequest = value?.Request;
 
-                OnPropertyChanged(nameof(SelectedRequest));
+                OnPropertyChanged(nameof(SelectedRequestsListingItemViewModel));
             }
         }
 
-        public RequestsListingViewModel(SelectedRequestStore selectedRequestStore)
+        public RequestsListingViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore)
         {
             _selectedRequestStore = selectedRequestStore;
+            _requestsStore = requestsStore;
 
-            Requests = new ObservableCollection<Request>()
+            _requestsListingItemViewModels = new ObservableCollection<RequestsListingItemViewModel>();
+
+            _selectedRequestStore.SelectedRequestChanged += SelectedRequestStore_SelectedRequestChanged;
+
+            _requestsStore.RequestsLoaded += RequestsStore_RequestsLoaded;
+            _requestsStore.RequestAdded += RequestsStore_RequestAdded;
+            _requestsStore.RequestUpdated += RequestsStore_RequestUpdated;
+            _requestsStore.RequestDeleted += RequestsStore_RequestDeleted;
+
+            _requestsListingItemViewModels.CollectionChanged += RequestsListingItemViewModels_CollectionChanged;
+        }
+
+        protected override void Dispose()
+        {
+            _requestsStore.RequestsLoaded -= RequestsStore_RequestsLoaded;
+            _requestsStore.RequestAdded -= RequestsStore_RequestAdded;
+            _requestsStore.RequestUpdated -= RequestsStore_RequestUpdated;
+            _requestsStore.RequestDeleted -= RequestsStore_RequestDeleted;
+
+            base.Dispose();
+        }
+
+        private void SelectedRequestStore_SelectedRequestChanged()
+        {
+            OnPropertyChanged(nameof(SelectedRequestsListingItemViewModel));
+        }
+
+        private void RequestsStore_RequestsLoaded()
+        {
+            _requestsListingItemViewModels.Clear();
+
+            foreach (Request request in _requestsStore.Requests)
             {
-                new Request()
-                {
-                    UserName = "admin",
-                    ActiveDirectoryCN = "Админ А. Админов",
-                    Period = new Period() { StartDate = new DateTime(2024, 8, 1), EndDate = new DateTime(2024, 8, 31), IsEnabled = false, PeriodId = 1 },
-                    Dates = new List<DateTime>() { new DateTime(2024, 8, 1) },
-                    IsApproved = true
-                },
-                new Request()
-                {
-                    UserName = "admin2",
-                    ActiveDirectoryCN = "Админ2 А. Админов2",
-                    Period = new Period() { StartDate = new DateTime(2024, 9, 1), EndDate = new DateTime(2024, 9, 30), IsEnabled = false, PeriodId = 2 },
-                    Dates = new List<DateTime>() { new DateTime(2024, 9, 1) },
-                    IsApproved = true
-                }
-            };
+                AddRequest(request);
+            }
+        }
+
+        private void RequestsStore_RequestAdded(Request request)
+        {
+            AddRequest(request);
+        }
+
+        private void RequestsStore_RequestUpdated(Request request)
+        {
+            var vm = _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == request.Id);
+
+            if (vm != null)
+            {
+                vm.Update(request);
+            }
+        }
+
+        private void RequestsStore_RequestDeleted(Guid id)
+        {
+            var vm = _requestsListingItemViewModels.FirstOrDefault(x => x.Request?.Id == id);
+
+            if (vm != null)
+            {
+                _requestsListingItemViewModels.Remove(vm);
+            }
+        }
+
+        private void AddRequest(Request request)
+        {
+            var vm = new RequestsListingItemViewModel(request, _requestsStore);
+            _requestsListingItemViewModels.Add(vm);
+        }
+
+        private void RequestsListingItemViewModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(SelectedRequestsListingItemViewModel));
         }
     }
 }

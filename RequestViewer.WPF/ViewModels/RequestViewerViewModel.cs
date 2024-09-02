@@ -1,4 +1,6 @@
-﻿using RequestViewer.WPF.Stores;
+﻿using RequestViewer.WPF.Commands;
+using RequestViewer.WPF.Stores;
+using System.Windows.Input;
 
 namespace RequestViewer.WPF.ViewModels
 {
@@ -9,12 +11,23 @@ namespace RequestViewer.WPF.ViewModels
         public RequestsListingViewModel RequestsListingViewModel { get; }
         public RequestsDetailsViewModel RequestsDetailsViewModel { get; }
 
-        public RequestViewerViewModel(SelectedRequestStore selectedRequestStore)
+        public RequestViewerViewModel(RequestsStore requestsStore, SelectedRequestStore selectedRequestStore)
         {
             _selectedRequestStore = selectedRequestStore;
 
-            RequestsListingViewModel = new RequestsListingViewModel(_selectedRequestStore);
+            RequestsListingViewModel = new RequestsListingViewModel(_selectedRequestStore, requestsStore);
             RequestsDetailsViewModel = new RequestsDetailsViewModel(_selectedRequestStore);
+
+            LoadRequestsCommand = new LoadRequestsCommand(this, requestsStore);
+        }
+
+        public ICommand LoadRequestsCommand { get; set; }
+
+        public static RequestViewerViewModel LoadViewModel(RequestsStore requestsStore, SelectedRequestStore selectedRequestStore)
+        {
+            var vm = new RequestViewerViewModel(requestsStore, selectedRequestStore);
+            vm.LoadRequestsCommand.Execute(null);
+            return vm;
         }
     }
 }

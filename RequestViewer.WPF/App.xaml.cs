@@ -21,7 +21,7 @@ namespace RequestViewer.WPF
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel(_selectedRequestStore);
+            MainWindow.DataContext = new MainViewModel(_selectedRequestStore, _requestsStore);
             MainWindow.Show();
 
             base.OnStartup(e);

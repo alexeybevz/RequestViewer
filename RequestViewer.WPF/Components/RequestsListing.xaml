@@ -9,7 +9,7 @@
              d:DesignWidth="800">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ListBoxItems"
-                              Source="{Binding Path=Requests}">
+                              Source="{Binding Path=RequestsListingItemViewModels}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="Name"></PropertyGroupDescription>
             </CollectionViewSource.GroupDescriptions>
@@ -21,7 +21,7 @@
         </Grid>
         <ListBox SelectionMode="Single"
                  ItemsSource="{Binding Source={StaticResource ListBoxItems}}"
-                 SelectedItem="{Binding SelectedRequest, Mode=TwoWay}">
+                 SelectedItem="{Binding SelectedRequestsListingItemViewModel, Mode=TwoWay}">
             <ListBox.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -35,13 +35,7 @@
             </ListBox.GroupStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="0">
-                        <Grid>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding .ActiveDirectoryCN}" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                    <local:RequestsListingItem />
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>

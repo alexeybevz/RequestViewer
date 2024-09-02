@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RequestViewer.WPF.ViewModels
+﻿namespace RequestViewer.WPF.ViewModels
 {
     public class DayViewModel : ViewModelBase
     {
