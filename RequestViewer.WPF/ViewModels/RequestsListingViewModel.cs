@@ -1,4 +1,4 @@
-﻿using RequestViewer.WPF.Domains;
+﻿using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Stores;
 using System;
 using System.Collections.Generic;

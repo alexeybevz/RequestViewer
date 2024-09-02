@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RequestViewer.WPF.Domains
+namespace RequestViewer.Domain.Models
 {
     public class Period
     {

@@ -1,4 +1,4 @@
-﻿using RequestViewer.WPF.Domains;
+﻿using RequestViewer.Domain.Models;
 using System;
 
 namespace RequestViewer.WPF.Stores

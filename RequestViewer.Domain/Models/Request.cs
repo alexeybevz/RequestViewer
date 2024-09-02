@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RequestViewer.WPF.Domains
+namespace RequestViewer.Domain.Models
 {
     public class Request
     {
