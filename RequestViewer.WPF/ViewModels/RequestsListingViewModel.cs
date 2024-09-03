@@ -20,9 +20,9 @@ namespace RequestViewer.WPF.ViewModels
             {
                 return _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == _selectedRequestStore.SelectedRequest?.Id);
             }
-            set {
+            set
+            {
                 _selectedRequestStore.SelectedRequest = value?.Request;
-
                 OnPropertyChanged(nameof(SelectedRequestsListingItemViewModel));
             }
         }
