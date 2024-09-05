@@ -7,29 +7,43 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Button}"
-               x:Key="DayButtonStyle">
+        <Style TargetType="Button">
             <Setter Property="Width"
-                    Value="80" />
-            <Setter Property="Height"
-                    Value="30" />
-            <Setter Property="FontSize"
-                    Value="14" />
+                    Value="90" />
+            <Setter Property="Foreground"
+                    Value="Black" />
+            <Setter Property="Background"
+                    Value="#ff8888" />
+            <Setter Property="Padding"
+                    Value="10 8" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="TextBlock.TextAlignment"
+                    Value="Center" />
+
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                    <ControlTemplate TargetType="Button">
+                        <Border Margin="{TemplateBinding Margin}"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3">
+                            <ContentPresenter />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
             <Style.Triggers>
+                <DataTrigger Binding="{Binding IsHeader}"
+                             Value="True">
+                    <Setter Property="Background"
+                            Value="#2b2b2b" />
+                    <Setter Property="Foreground"
+                            Value="White" />
+                </DataTrigger>
                 <Trigger Property="IsMouseOver"
                          Value="True">
-                    <Setter Property="Background"
-                            Value="Transparent" />
                     <Setter Property="Foreground"
                             Value="White" />
                 </Trigger>
@@ -37,7 +51,6 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Button Content="{Binding Day}"
-                Style="{StaticResource DayButtonStyle}" />
+        <Button Content="{Binding Day}" />
     </Grid>
 </UserControl>

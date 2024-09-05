@@ -1,4 +1,5 @@
 ﻿using RequestViewer.WPF.Stores;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace RequestViewer.WPF.ViewModels
@@ -7,6 +8,7 @@ namespace RequestViewer.WPF.ViewModels
     {
         private ObservableCollection<DayViewModel> _days;
         private readonly SelectedRequestStore _selectedRequestStore;
+        private readonly List<string> _daysOfWeekHeaders;
 
         public ObservableCollection<DayViewModel> DayVMs
         {
@@ -18,6 +20,8 @@ namespace RequestViewer.WPF.ViewModels
         {
             DayVMs = new ObservableCollection<DayViewModel>();
 
+            _daysOfWeekHeaders = new List<string>() { "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС" };
+
             _selectedRequestStore = selectedRequestStore;
             _selectedRequestStore.SelectedRequestChanged += SelectedRequestStore_SelectedRequestChanged;
         }
@@ -25,6 +29,9 @@ namespace RequestViewer.WPF.ViewModels
         private void SelectedRequestStore_SelectedRequestChanged()
         {
             DayVMs.Clear();
+
+            foreach (var header in _daysOfWeekHeaders)
+                DayVMs.Add(new DayViewModel() { Day = header, IsHeader = true });
 
             if (_selectedRequestStore.SelectedRequest == null)
                 return;
@@ -38,7 +45,7 @@ namespace RequestViewer.WPF.ViewModels
 
             for (int i = 1; i <= _selectedRequestStore.SelectedRequest.Period.EndDate.Day; i++)
             {
-                DayVMs.Add(new DayViewModel() { Day = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i).ToString("dd.MM.yyyy") });
+                DayVMs.Add(new DayViewModel() { Day = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i).ToString("dd.MM.yyyy"), IsHeader = false });
             }
         }
     }
