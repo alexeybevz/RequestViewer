@@ -38,29 +38,29 @@ namespace RequestViewer.WPF.Stores
 
         public async Task Load()
         {
-            //IEnumerable<Request> requests = await _getAllRequestsQuery.Execute();
+            IEnumerable<Request> requests = await _getAllRequestsQuery.Execute();
 
-            var requests = new List<Request>()
-            {
-                new Request()
-                {
-                    UserName = "admin",
-                    ActiveDirectoryCN = "Админ А. Админов",
-                    Period = new Period() { StartDate = new DateTime(2024, 8, 1), EndDate = new DateTime(2024, 8, 31), IsEnabled = false, PeriodId = 1 },
-                    Dates = new List<DateTime>() { new DateTime(2024, 8, 1), new DateTime(2024, 8, 2), new DateTime(2024, 8, 3), new DateTime(2024, 8, 9) },
-                    IsApproved = true,
-                    Id = Guid.NewGuid()
-                },
-                new Request()
-                {
-                    UserName = "admin2",
-                    ActiveDirectoryCN = "Админ2 А. Админов2",
-                    Period = new Period() { StartDate = new DateTime(2024, 9, 1), EndDate = new DateTime(2024, 9, 30), IsEnabled = false, PeriodId = 2 },
-                    Dates = new List<DateTime>() { new DateTime(2024, 9, 1) },
-                    IsApproved = true,
-                    Id = Guid.NewGuid()
-                }
-            };
+            //var requests = new List<Request>()
+            //{
+            //    new Request()
+            //    {
+            //        UserName = "admin",
+            //        ActiveDirectoryCN = "Админ А. Админов",
+            //        Period = new Period() { StartDate = new DateTime(2024, 8, 1), EndDate = new DateTime(2024, 8, 31), IsEnabled = false, PeriodId = Guid.NewGuid() },
+            //        Dates = new List<DateTime>() { new DateTime(2024, 8, 1), new DateTime(2024, 8, 2), new DateTime(2024, 8, 3), new DateTime(2024, 8, 9) },
+            //        IsApproved = true,
+            //        Id = Guid.NewGuid()
+            //    },
+            //    new Request()
+            //    {
+            //        UserName = "admin2",
+            //        ActiveDirectoryCN = "Админ2 А. Админов2",
+            //        Period = new Period() { StartDate = new DateTime(2024, 9, 1), EndDate = new DateTime(2024, 9, 30), IsEnabled = false, PeriodId = Guid.NewGuid() },
+            //        Dates = new List<DateTime>() { new DateTime(2024, 9, 1) },
+            //        IsApproved = true,
+            //        Id = Guid.NewGuid()
+            //    }
+            //};
 
             _requests.Clear();
             _requests.AddRange(requests);

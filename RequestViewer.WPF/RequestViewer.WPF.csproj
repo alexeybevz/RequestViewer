@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RequestViewer.Domain\RequestViewer.Domain.csproj" />
+    <ProjectReference Include="..\RequestViewer.EntityFramework\RequestViewer.EntityFramework.csproj" />
   </ItemGroup>
 
 </Project>
