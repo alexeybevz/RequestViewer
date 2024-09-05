@@ -47,7 +47,7 @@ namespace RequestViewer.WPF.Stores
                     UserName = "admin",
                     ActiveDirectoryCN = "Админ А. Админов",
                     Period = new Period() { StartDate = new DateTime(2024, 8, 1), EndDate = new DateTime(2024, 8, 31), IsEnabled = false, PeriodId = 1 },
-                    Dates = new List<DateTime>() { new DateTime(2024, 8, 1) },
+                    Dates = new List<DateTime>() { new DateTime(2024, 8, 1), new DateTime(2024, 8, 2), new DateTime(2024, 8, 3), new DateTime(2024, 8, 9) },
                     IsApproved = true,
                     Id = Guid.NewGuid()
                 },

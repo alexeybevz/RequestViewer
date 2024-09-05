@@ -45,7 +45,13 @@ namespace RequestViewer.WPF.ViewModels
 
             for (int i = 1; i <= _selectedRequestStore.SelectedRequest.Period.EndDate.Day; i++)
             {
-                DayVMs.Add(new DayViewModel() { Day = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i).ToString("dd.MM.yyyy"), IsHeader = false });
+                var dt = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i);
+
+                DayVMs.Add(new DayViewModel() {
+                    Day = dt.ToString("dd.MM.yyyy"),
+                    IsHeader = false,
+                    IsOpen = _selectedRequestStore?.SelectedRequest.Dates.Contains(dt) ?? false,
+                });
             }
         }
     }
