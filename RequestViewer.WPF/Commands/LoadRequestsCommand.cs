@@ -21,7 +21,7 @@ namespace RequestViewer.WPF.Commands
             {
                 await _requestsStore.Load();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
             }
             finally

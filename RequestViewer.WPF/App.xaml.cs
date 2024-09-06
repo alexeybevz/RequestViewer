@@ -25,7 +25,7 @@ namespace RequestViewer.WPF
 
             _requestViewerDbContextFactory = new RequestViewerDbContextFactory(new DbContextOptionsBuilder().UseSqlite(connectionString).Options);
 
-            _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory);
+            _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory, new GetAllUsersQuery(_requestViewerDbContextFactory));
 
             _requestsStore = new RequestsStore(_getAllRequestsQuery, null, null, null);
             _selectedRequestStore = new SelectedRequestStore(_requestsStore);

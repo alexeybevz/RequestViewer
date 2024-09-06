@@ -9,5 +9,6 @@ namespace RequestViewer.EntityFramework
 
         public DbSet<RequestDTO> Requests { get; set; }
         public DbSet<PeriodDto> Periods { get; set; }
+        public DbSet<UserDto> Users { get; set; }
     }
 }

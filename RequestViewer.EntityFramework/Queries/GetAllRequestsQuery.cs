@@ -10,14 +10,18 @@ namespace RequestViewer.EntityFramework.Queries
     public class GetAllRequestsQuery : IGetAllRequestsQuery
     {
         private readonly RequestViewerDbContextFactory _contextFactory;
+        private readonly IGetAllUsersQuery _getAllUsersQuery;
 
-        public GetAllRequestsQuery(RequestViewerDbContextFactory contextFactory)
+        public GetAllRequestsQuery(RequestViewerDbContextFactory contextFactory, IGetAllUsersQuery getAllUsersQuery)
         {
             _contextFactory = contextFactory;
+            _getAllUsersQuery = getAllUsersQuery;
         }
 
         public async Task<IEnumerable<Request>> Execute()
         {
+            IEnumerable<User> users = await _getAllUsersQuery.Execute();
+
             using (var context = _contextFactory.Create())
             {
                 var requests = await context.Requests.Include(r => r.Period).ToListAsync();
@@ -27,6 +31,7 @@ namespace RequestViewer.EntityFramework.Queries
                 {
                     Id = r.Key.Id,
                     UserName = r.Key.UserName,
+                    ActiveDirectoryCN = users.FirstOrDefault(u => u.Login == r.Key.UserName)?.ActiveDirectoryCN ?? r.Key.UserName,
                     Period = new Period()
                     {
                         PeriodId = r.Key.PeriodId,
