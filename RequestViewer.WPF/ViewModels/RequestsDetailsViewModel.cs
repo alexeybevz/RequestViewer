@@ -1,6 +1,7 @@
 ﻿using RequestViewer.WPF.Stores;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace RequestViewer.WPF.ViewModels
 {
@@ -50,7 +51,8 @@ namespace RequestViewer.WPF.ViewModels
                 DayVMs.Add(new DayViewModel() {
                     Day = dt.ToString("dd.MM.yyyy"),
                     IsHeader = false,
-                    IsOpen = _selectedRequestStore?.SelectedRequest.Dates.Contains(dt) ?? false,
+                    IsOpen = _selectedRequestStore?.SelectedRequest.Dates.Select(d => d.Date).Contains(dt) ?? false,
+                    IsApproved = _selectedRequestStore.SelectedRequest.IsApproved
                 });
             }
         }

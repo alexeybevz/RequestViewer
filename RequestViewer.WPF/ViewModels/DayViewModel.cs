@@ -5,6 +5,7 @@
         private string _day;
         private bool _isHeader;
         private bool _isOpen;
+        private bool _isApproved;
 
         public string Day
         {
@@ -22,6 +23,12 @@
         {
             get { return _isOpen; }
             set { _isOpen = value; OnPropertyChanged(nameof(IsOpen)); }
+        }
+
+        public bool IsApproved
+        {
+            get { return _isApproved; }
+            set { _isApproved = value; OnPropertyChanged(nameof(IsApproved)); }
         }
     }
 }

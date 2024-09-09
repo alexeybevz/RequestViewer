@@ -42,11 +42,33 @@
                     <Setter Property="Foreground"
                             Value="White" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding IsOpen}"
-                             Value="True">
-                    <Setter Property="Background"
-                            Value="#a7ffa3" />
-                </DataTrigger>
+                
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsOpen}"
+                                   Value="True" />
+                        <Condition Binding="{Binding IsApproved}"
+                                   Value="False" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background"
+                                Value="#ff9648" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+                
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsOpen}"
+                                   Value="True" />
+                        <Condition Binding="{Binding IsApproved}"
+                                   Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Background"
+                                Value="#a7ffa3" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+                
                 <Trigger Property="IsMouseOver"
                          Value="True">
                     <Setter Property="Foreground"
