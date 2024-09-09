@@ -7,10 +7,13 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
@@ -27,7 +30,7 @@
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"
                                    IsItemsHost="True"
-                                   Width="700"/>
+                                   Width="700" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemContainerStyle>
@@ -53,7 +56,7 @@
                                                     Property="Background"
                                                     Value="Transparent" />
                                         </Trigger>
-                                        
+
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -68,8 +71,19 @@
             </ListBox>
         </Grid>
         <Grid Grid.Row="2"
-              Margin="10 0 10 0">
-            <Button Content="Подтвердить" />
+              Margin="10 0 10 0"
+              Visibility="{Binding HasCommands, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Content="Согласовать"
+                        Command="{Binding ApproveRequestCommand}"
+                        Style="{StaticResource ApproveButton}"
+                        Cursor="Hand" />
+                <Button Content="Отклонить"
+                        Command="{Binding RejectRequestCommand}"
+                        Style="{StaticResource RejectButton}"
+                        Margin="5 0 0 0"
+                        Cursor="Hand" />
+            </WrapPanel>
         </Grid>
     </Grid>
 </UserControl>

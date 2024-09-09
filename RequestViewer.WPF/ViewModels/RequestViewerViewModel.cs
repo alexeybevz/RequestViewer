@@ -16,7 +16,7 @@ namespace RequestViewer.WPF.ViewModels
             _selectedRequestStore = selectedRequestStore;
 
             RequestsListingViewModel = new RequestsListingViewModel(_selectedRequestStore, requestsStore);
-            RequestsDetailsViewModel = new RequestsDetailsViewModel(_selectedRequestStore);
+            RequestsDetailsViewModel = new RequestsDetailsViewModel(_selectedRequestStore, requestsStore);
 
             LoadRequestsCommand = new LoadRequestsCommand(this, requestsStore);
         }

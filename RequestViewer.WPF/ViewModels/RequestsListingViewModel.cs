@@ -40,6 +40,7 @@ namespace RequestViewer.WPF.ViewModels
             _requestsStore.RequestAdded += RequestsStore_RequestAdded;
             _requestsStore.RequestUpdated += RequestsStore_RequestUpdated;
             _requestsStore.RequestDeleted += RequestsStore_RequestDeleted;
+            _requestsStore.RequestApproved += RequestsStore_RequestApproved;
 
             _requestsListingItemViewModels.CollectionChanged += RequestsListingItemViewModels_CollectionChanged;
         }
@@ -91,6 +92,16 @@ namespace RequestViewer.WPF.ViewModels
             if (vm != null)
             {
                 _requestsListingItemViewModels.Remove(vm);
+            }
+        }
+
+        private void RequestsStore_RequestApproved(Request request)
+        {
+            var vm = _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == request.Id);
+
+            if (vm != null)
+            {
+                vm.Update(request);
             }
         }
 

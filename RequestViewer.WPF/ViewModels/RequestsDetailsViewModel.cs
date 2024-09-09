@@ -1,7 +1,9 @@
-﻿using RequestViewer.WPF.Stores;
+﻿using RequestViewer.WPF.Commands;
+using RequestViewer.WPF.Stores;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace RequestViewer.WPF.ViewModels
 {
@@ -17,9 +19,17 @@ namespace RequestViewer.WPF.ViewModels
             set { _days = value; OnPropertyChanged(nameof(DayVMs)); }
         }
 
-        public RequestsDetailsViewModel(SelectedRequestStore selectedRequestStore)
+        public bool HasCommands => !_selectedRequestStore.SelectedRequest?.IsApproved ?? false;
+
+        public ICommand ApproveRequestCommand { get; }
+        public ICommand RejectRequestCommand { get; }
+
+        public RequestsDetailsViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore)
         {
             DayVMs = new ObservableCollection<DayViewModel>();
+
+            ApproveRequestCommand = new ApproveRequestCommand(this, requestsStore, selectedRequestStore);
+            RejectRequestCommand = new RejectRequestCommand(this, requestsStore, selectedRequestStore);
 
             _daysOfWeekHeaders = new List<string>() { "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС" };
 
@@ -28,6 +38,13 @@ namespace RequestViewer.WPF.ViewModels
         }
 
         private void SelectedRequestStore_SelectedRequestChanged()
+        {
+            RefreshDayVMs();
+
+            OnPropertyChanged(nameof(HasCommands));
+        }
+
+        private void RefreshDayVMs()
         {
             DayVMs.Clear();
 
@@ -48,7 +65,8 @@ namespace RequestViewer.WPF.ViewModels
             {
                 var dt = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i);
 
-                DayVMs.Add(new DayViewModel() {
+                DayVMs.Add(new DayViewModel()
+                {
                     Day = dt.ToString("dd.MM.yyyy"),
                     IsHeader = false,
                     IsOpen = _selectedRequestStore?.SelectedRequest.Dates.Select(d => d.Date).Contains(dt) ?? false,
