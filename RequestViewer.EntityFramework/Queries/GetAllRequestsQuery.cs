@@ -26,10 +26,9 @@ namespace RequestViewer.EntityFramework.Queries
             {
                 var requests = await context.Requests.Include(r => r.Period).ToListAsync();
 
-                var grp = requests.GroupBy(r => new { r.Id, r.UserName, r.PeriodId, r.Period, r.IsApproved }).ToList();
+                var grp = requests.GroupBy(r => new { r.UserName, r.PeriodId, r.Period, r.IsApproved }).ToList();
                 return grp.Select(r => new Request()
                 {
-                    Id = r.Key.Id,
                     UserName = r.Key.UserName,
                     ActiveDirectoryCN = users.FirstOrDefault(u => u.Login == r.Key.UserName)?.ActiveDirectoryCN ?? r.Key.UserName,
                     Period = new Period()
@@ -40,8 +39,12 @@ namespace RequestViewer.EntityFramework.Queries
                         IsEnabled = r.Key.Period.IsEnabled,
                     },
                     IsApproved = r.Key.IsApproved,
-                    Dates = r.Select(g => g.AllowedDate).ToList()
-                }).ToList();
+                    Dates = r.Select(g => new Day() { RequestId = g.Id, Date = g.AllowedDate }).ToList()
+                })
+                .OrderBy(x => x.IsApproved)
+                .ThenBy(x => x.Period.PeriodId)
+                .ThenBy(x => x.ActiveDirectoryCN)
+                .ToList();
             }
         }
     }
