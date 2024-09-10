@@ -1,4 +1,5 @@
-﻿using RequestViewer.WPF.Stores;
+﻿using RequestViewer.Domain.Models;
+using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _selectedRequestStore.SelectedRequest.IsApproved = true;
+
             try
             {
                 await _requestsStore.Approve(_selectedRequestStore.SelectedRequest);

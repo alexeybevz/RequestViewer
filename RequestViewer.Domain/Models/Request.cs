@@ -6,7 +6,7 @@ namespace RequestViewer.Domain.Models
 {
     public class Request
     {
-        public Guid Id => Guid.NewGuid();
+        public Guid Id { get; set; }
         public string UserName { get; set; }
         public string ActiveDirectoryCN { get; set; }
         public Period Period { get; set; }

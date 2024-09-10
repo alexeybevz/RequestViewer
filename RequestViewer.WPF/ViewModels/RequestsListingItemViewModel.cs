@@ -18,7 +18,9 @@ namespace RequestViewer.WPF.ViewModels
         {
             Request = request;
 
+            OnPropertyChanged(nameof(Request));
             OnPropertyChanged(nameof(Name));
+            OnPropertyChanged(nameof(ActiveDirectoryCN));
         }
     }
 }

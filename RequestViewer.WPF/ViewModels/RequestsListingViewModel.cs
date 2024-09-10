@@ -110,11 +110,11 @@ namespace RequestViewer.WPF.ViewModels
 
         private void RequestsStore_RequestRejected(Request request)
         {
-            var vm = _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == request.Id);
+            var vm = _requestsListingItemViewModels.FirstOrDefault(x => x.Request?.Id == request.Id);
 
             if (vm != null)
             {
-                vm.Update(request);
+                _requestsListingItemViewModels.Remove(vm);
             }
         }
 

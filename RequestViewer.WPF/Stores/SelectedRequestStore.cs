@@ -30,6 +30,8 @@ namespace RequestViewer.WPF.Stores
             _requestsStore.RequestAdded += RequestsStore_RequestAdded;
             _requestsStore.RequestUpdated += RequestsStore_RequestUpdated;
             _requestsStore.RequestDeleted += RequestsStore_RequestDeleted;
+            _requestsStore.RequestApproved += RequestsStore_RequestApproved;
+            _requestsStore.RequestRejected += RequestsStore_RequestRejected;
         }
 
         private void RequestsStore_RequestAdded(Request request)
@@ -48,6 +50,22 @@ namespace RequestViewer.WPF.Stores
         private void RequestsStore_RequestDeleted(Guid id)
         {
             if (SelectedRequest?.Id == id)
+            {
+                SelectedRequest = null;
+            }
+        }
+
+        private void RequestsStore_RequestApproved(Request request)
+        {
+            if (request.Id == SelectedRequest?.Id)
+            {
+                SelectedRequest = request;
+            }
+        }
+
+        private void RequestsStore_RequestRejected(Request request)
+        {
+            if (SelectedRequest?.Id == request.Id)
             {
                 SelectedRequest = null;
             }

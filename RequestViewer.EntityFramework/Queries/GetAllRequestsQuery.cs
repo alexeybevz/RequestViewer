@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RequestViewer.Domain.Models;
 using RequestViewer.Domain.Queries;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace RequestViewer.EntityFramework.Queries
                 var grp = requests.GroupBy(r => new { r.UserName, r.PeriodId, r.Period, r.IsApproved }).ToList();
                 return grp.Select(r => new Request()
                 {
+                    Id = Guid.NewGuid(),
                     UserName = r.Key.UserName,
                     ActiveDirectoryCN = users.FirstOrDefault(u => u.Login == r.Key.UserName)?.ActiveDirectoryCN ?? r.Key.UserName,
                     Period = new Period()

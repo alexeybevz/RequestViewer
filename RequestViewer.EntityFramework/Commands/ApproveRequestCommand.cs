@@ -23,7 +23,7 @@ namespace RequestViewer.EntityFramework.Commands
                     var requestDto = new RequestDto() { Id = day.RequestId };
 
                     context.Attach(requestDto);
-                    requestDto.IsApproved = true;
+                    requestDto.IsApproved = request.IsApproved;
 
                     await context.SaveChangesAsync();
                 }

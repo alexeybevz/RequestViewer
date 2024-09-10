@@ -92,6 +92,16 @@ namespace RequestViewer.WPF.Stores
         {
             await _approveRequestCommand.Execute(request);
 
+            int currentIndex = _requests.FindIndex(x => x.Id == request.Id);
+            if (currentIndex != -1)
+            {
+                _requests[currentIndex] = request;
+            }
+            else
+            {
+                _requests.Add(request);
+            }
+
             RequestApproved?.Invoke(request);
         }
 
