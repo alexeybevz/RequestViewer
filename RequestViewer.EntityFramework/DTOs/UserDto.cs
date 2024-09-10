@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RequestViewer.EntityFramework.DTOs
+﻿namespace RequestViewer.EntityFramework.DTOs
 {
     public class UserDto
     {

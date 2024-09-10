@@ -14,7 +14,7 @@ namespace RequestViewer.WPF.Stores
         private readonly IUpdateRequestCommand _updateRequestCommand;
         private readonly IDeleteRequestCommand _deleteRequestCommand;
         private readonly IApproveRequestCommand _approveRequestCommand;
-
+        private readonly IRejectRequestCommand _rejectRequestCommand;
         private readonly List<Request> _requests;
         public IEnumerable<Request> Requests => _requests;
 
@@ -23,13 +23,15 @@ namespace RequestViewer.WPF.Stores
             ICreateRequestCommand createRequestCommand,
             IUpdateRequestCommand updateRequestCommand,
             IDeleteRequestCommand deleteRequestCommand,
-            IApproveRequestCommand approveRequestCommand)
+            IApproveRequestCommand approveRequestCommand,
+            IRejectRequestCommand rejectRequestCommand)
         {
             _getAllRequestsQuery = getAllRequestsQuery;
             _createRequestCommand = createRequestCommand;
             _updateRequestCommand = updateRequestCommand;
             _deleteRequestCommand = deleteRequestCommand;
             _approveRequestCommand = approveRequestCommand;
+            _rejectRequestCommand = rejectRequestCommand;
 
             _requests = new List<Request>();
         }
@@ -39,6 +41,7 @@ namespace RequestViewer.WPF.Stores
         public event Action<Request> RequestUpdated;
         public event Action<Guid> RequestDeleted;
         public event Action<Request> RequestApproved;
+        public event Action<Request> RequestRejected;
 
         public async Task Load()
         {
@@ -90,6 +93,13 @@ namespace RequestViewer.WPF.Stores
             await _approveRequestCommand.Execute(request);
 
             RequestApproved?.Invoke(request);
+        }
+
+        public async Task Reject(Request request)
+        {
+            await _rejectRequestCommand.Execute(request);
+
+            RequestRejected?.Invoke(request);
         }
     }
 }

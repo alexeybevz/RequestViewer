@@ -21,6 +21,7 @@ namespace RequestViewer.WPF
 
         private readonly IGetAllRequestsQuery _getAllRequestsQuery;
         private readonly IApproveRequestCommand _approveRequestCommand;
+        private readonly IRejectRequestCommand _rejectRequestCommand;
 
         public App()
         {
@@ -30,8 +31,9 @@ namespace RequestViewer.WPF
 
             _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory, new GetAllUsersQuery(_requestViewerDbContextFactory));
             _approveRequestCommand = new ApproveRequestCommand(_requestViewerDbContextFactory);
+            _rejectRequestCommand = new RejectRequestCommand(_requestViewerDbContextFactory);
 
-            _requestsStore = new RequestsStore(_getAllRequestsQuery, null, null, null, _approveRequestCommand);
+            _requestsStore = new RequestsStore(_getAllRequestsQuery, null, null, null, _approveRequestCommand, _rejectRequestCommand);
             _selectedRequestStore = new SelectedRequestStore(_requestsStore);
         }
 

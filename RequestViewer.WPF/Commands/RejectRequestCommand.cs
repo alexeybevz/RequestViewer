@@ -1,5 +1,6 @@
 ﻿using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;
+using System;
 using System.Threading.Tasks;
 
 namespace RequestViewer.WPF.Commands
@@ -17,9 +18,20 @@ namespace RequestViewer.WPF.Commands
             _selectedRequestStore = selectedRequestStore;
         }
 
-        public override Task ExecuteAsync(object parameter)
+        public override async Task ExecuteAsync(object parameter)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                await _requestsStore.Reject(_selectedRequestStore.SelectedRequest);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+
+            }
         }
     }
 }

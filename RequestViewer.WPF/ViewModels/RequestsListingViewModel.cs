@@ -41,6 +41,7 @@ namespace RequestViewer.WPF.ViewModels
             _requestsStore.RequestUpdated += RequestsStore_RequestUpdated;
             _requestsStore.RequestDeleted += RequestsStore_RequestDeleted;
             _requestsStore.RequestApproved += RequestsStore_RequestApproved;
+            _requestsStore.RequestRejected += RequestsStore_RequestRejected;
 
             _requestsListingItemViewModels.CollectionChanged += RequestsListingItemViewModels_CollectionChanged;
         }
@@ -51,6 +52,8 @@ namespace RequestViewer.WPF.ViewModels
             _requestsStore.RequestAdded -= RequestsStore_RequestAdded;
             _requestsStore.RequestUpdated -= RequestsStore_RequestUpdated;
             _requestsStore.RequestDeleted -= RequestsStore_RequestDeleted;
+            _requestsStore.RequestApproved -= RequestsStore_RequestApproved;
+            _requestsStore.RequestRejected -= RequestsStore_RequestRejected;
 
             base.Dispose();
         }
@@ -96,6 +99,16 @@ namespace RequestViewer.WPF.ViewModels
         }
 
         private void RequestsStore_RequestApproved(Request request)
+        {
+            var vm = _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == request.Id);
+
+            if (vm != null)
+            {
+                vm.Update(request);
+            }
+        }
+
+        private void RequestsStore_RequestRejected(Request request)
         {
             var vm = _requestsListingItemViewModels.FirstOrDefault(y => y.Request.Id == request.Id);
 

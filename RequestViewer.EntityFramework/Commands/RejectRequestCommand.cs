@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace RequestViewer.EntityFramework.Commands
 {
-    public class ApproveRequestCommand : IApproveRequestCommand
+    public class RejectRequestCommand : IRejectRequestCommand
     {
         private readonly RequestViewerDbContextFactory _contextFactory;
 
-        public ApproveRequestCommand(RequestViewerDbContextFactory requestViewerDbContextFactory)
+        public RejectRequestCommand(RequestViewerDbContextFactory requestViewerDbContextFactory)
         {
             _contextFactory = requestViewerDbContextFactory;
         }
@@ -22,9 +22,7 @@ namespace RequestViewer.EntityFramework.Commands
                 {
                     var requestDto = new RequestDto() { Id = day.RequestId };
 
-                    context.Attach(requestDto);
-                    requestDto.IsApproved = true;
-
+                    context.Remove(requestDto);
                     await context.SaveChangesAsync();
                 }
             }

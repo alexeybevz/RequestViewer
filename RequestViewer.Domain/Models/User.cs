@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RequestViewer.Domain.Models
+﻿namespace RequestViewer.Domain.Models
 {
     public class User
     {
