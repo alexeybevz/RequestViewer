@@ -8,10 +8,11 @@
              d:DesignHeight="450" 
              d:DesignWidth="800">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="ListBoxItems"
-                              Source="{Binding Path=RequestsListingItemViewModels}">
+        <CollectionViewSource x:Key="RequestsViewSource"
+                              Source="{Binding Path=RequestsListingItemViewModels}"
+                              IsLiveGroupingRequested="True">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Name"></PropertyGroupDescription>
+                <PropertyGroupDescription PropertyName="Name" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>    
@@ -20,7 +21,7 @@
         <TextBlock Text="Данные" />
         </Grid>
         <ListBox SelectionMode="Single"
-                 ItemsSource="{Binding Source={StaticResource ListBoxItems}}"
+                 ItemsSource="{Binding Source={StaticResource RequestsViewSource}}"
                  SelectedItem="{Binding SelectedRequestsListingItemViewModel, Mode=TwoWay}">
             <ListBox.GroupStyle>
                 <GroupStyle>
