@@ -10,6 +10,6 @@ namespace RequestViewer.EntityFramework.DTOs
         public DateTime EndDate { get; set; }
         public bool IsEnabled { get; set; }
 
-        public ICollection<RequestDTO> Requests { get; set; }
+        public ICollection<RequestDto> Requests { get; set; }
     }
 }

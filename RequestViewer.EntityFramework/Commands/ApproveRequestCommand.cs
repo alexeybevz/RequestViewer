@@ -23,14 +23,11 @@ namespace RequestViewer.EntityFramework.Commands
             {
                 foreach (var day in request.Dates)
                 {
-                    var requestDto = new RequestDTO()
-                    {
-                        Id = day.RequestId,
-                        IsApproved = true,
-                        PeriodId = request.Period.PeriodId
-                    };
+                    var requestDto = new RequestDto() { Id = day.RequestId };
 
-                    context.Update(requestDto);
+                    context.Attach(requestDto);
+                    requestDto.IsApproved = true;
+
                     await context.SaveChangesAsync();
                 }
             }
