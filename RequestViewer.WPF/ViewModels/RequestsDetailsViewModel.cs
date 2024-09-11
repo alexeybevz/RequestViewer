@@ -48,11 +48,11 @@ namespace RequestViewer.WPF.ViewModels
         {
             DayVMs.Clear();
 
-            foreach (var header in _daysOfWeekHeaders)
-                DayVMs.Add(new DayViewModel() { Day = header, IsHeader = true });
-
             if (_selectedRequestStore.SelectedRequest == null)
                 return;
+
+            foreach (var header in _daysOfWeekHeaders)
+                DayVMs.Add(new DayViewModel() { Day = header, IsHeader = true });
 
             var dayOfWeek = (int)(_selectedRequestStore.SelectedRequest.Period.StartDate.DayOfWeek + 6) % 7;
 
