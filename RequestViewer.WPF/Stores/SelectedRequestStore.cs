@@ -6,6 +6,7 @@ namespace RequestViewer.WPF.Stores
     public class SelectedRequestStore
     {
         private Request _selectedRequest;
+        private Request _prevSelectedRequest;
         private readonly RequestsStore _requestsStore;
 
         public Request SelectedRequest
@@ -16,8 +17,21 @@ namespace RequestViewer.WPF.Stores
             }
             set
             {
-                _selectedRequest = value;
-                SelectedRequestChanged?.Invoke();
+                if (!Equals(_selectedRequest, value))
+                {
+                    _prevSelectedRequest = _selectedRequest;
+                    _selectedRequest = value;
+                    SelectedRequestChanged?.Invoke();
+                    if (value == null)
+                    {
+                        // Ignore null set by the live grouping/sorting/filtering in the CollectionViewSource
+                        System.Windows.Application.Current.MainWindow.Dispatcher.BeginInvoke(
+                            new Action(() =>
+                            {
+                                SelectedRequest = _prevSelectedRequest;
+                            }));
+                    }
+                }
             }
         }
 
@@ -51,7 +65,7 @@ namespace RequestViewer.WPF.Stores
         {
             if (SelectedRequest?.Id == id)
             {
-                SelectedRequest = null;
+                ClearSelectedRequest();
             }
         }
 
@@ -67,8 +81,14 @@ namespace RequestViewer.WPF.Stores
         {
             if (SelectedRequest?.Id == request.Id)
             {
-                SelectedRequest = null;
+                ClearSelectedRequest();
             }
+        }
+
+        private void ClearSelectedRequest()
+        {
+            _selectedRequest = null;
+            SelectedRequestChanged?.Invoke();
         }
     }
 }
