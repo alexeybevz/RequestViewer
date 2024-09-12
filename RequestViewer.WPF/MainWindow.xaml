@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:RequestViewer.WPF"
         xmlns:views="clr-namespace:RequestViewer.WPF.Views"
         xmlns:vms="clr-namespace:RequestViewer.WPF.ViewModels"
+        xmlns:custom="clr-namespace:ModalControl;assembly=ModalControl"
         mc:Ignorable="d"
         Title="Предоставление доступа"
         Height="450"
@@ -13,7 +14,18 @@
         FontSize="14"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:EditRequestViewModel}">
+            <views:EditRequestViewerView />
+        </DataTemplate>
+    </Window.Resources>    
     <Grid Margin="25">
+        <custom:Modal Panel.ZIndex="1"
+                      IsOpen="{Binding IsModalOpen}">
+            <ContentControl Margin="50 25"
+                            Content="{Binding CurrentModalViewModel}" />
+        </custom:Modal>
+
         <views:RequestViewerView DataContext="{Binding RequestViewerViewModel}" />
     </Grid>
 </Window>

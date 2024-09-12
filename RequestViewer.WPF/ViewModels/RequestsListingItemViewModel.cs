@@ -1,5 +1,7 @@
 ﻿using RequestViewer.Domain.Models;
+using RequestViewer.WPF.Commands;
 using RequestViewer.WPF.Stores;
+using System.Windows.Input;
 
 namespace RequestViewer.WPF.ViewModels
 {
@@ -10,9 +12,15 @@ namespace RequestViewer.WPF.ViewModels
         public string ActiveDirectoryCN => Request.ActiveDirectoryCN;
         public bool HasCommands => Request.IsApproved;
 
-        public RequestsListingItemViewModel(Request request, RequestsStore requestsStore)
+        public ICommand EditRequestCommand { get; }
+        public ICommand DeleteRequestCommand { get; }
+
+        public RequestsListingItemViewModel(Request request, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
         {
             Request = request;
+
+            EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore);
+            //DeleteRequestCommand = new DeleteYouTubeViewerCommand(this, youTubeViewersStore);
         }
 
         public void Update(Request request)

@@ -10,6 +10,7 @@ namespace RequestViewer.WPF.ViewModels
     {
         private readonly SelectedRequestStore _selectedRequestStore;
         private readonly RequestsStore _requestsStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
         private ObservableCollection<RequestsListingItemViewModel> _requestsListingItemViewModels;
 
         public ObservableCollection<RequestsListingItemViewModel> RequestsListingItemViewModels => _requestsListingItemViewModels;
@@ -27,11 +28,11 @@ namespace RequestViewer.WPF.ViewModels
             }
         }
 
-        public RequestsListingViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore)
+        public RequestsListingViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
         {
             _selectedRequestStore = selectedRequestStore;
             _requestsStore = requestsStore;
-
+            _modalNavigationStore = modalNavigationStore;
             _requestsListingItemViewModels = new ObservableCollection<RequestsListingItemViewModel>();
 
             _selectedRequestStore.SelectedRequestChanged += SelectedRequestStore_SelectedRequestChanged;
@@ -122,7 +123,7 @@ namespace RequestViewer.WPF.ViewModels
 
         private void AddRequest(Request request)
         {
-            var vm = new RequestsListingItemViewModel(request, _requestsStore);
+            var vm = new RequestsListingItemViewModel(request, _requestsStore, _modalNavigationStore);
             _requestsListingItemViewModels.Add(vm);
         }
 

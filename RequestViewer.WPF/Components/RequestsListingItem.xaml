@@ -86,9 +86,9 @@
                                 </Style>
                             </StackPanel.Resources>
                             <Button Content="Редактировать заявку"
-                                    Command="{Binding EditCommand}" />
+                                    Command="{Binding EditRequestCommand}" />
                             <Button Content="Удалить заявку"
-                                    Command="{Binding DeleteCommand}" />
+                                    Command="{Binding DeleteRequestCommand}" />
                         </StackPanel>
                     </Border>
                 </custom:DropdownMenu>

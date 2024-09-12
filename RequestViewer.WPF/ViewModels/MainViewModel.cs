@@ -6,15 +6,34 @@ namespace RequestViewer.WPF.ViewModels
     {
         private readonly SelectedRequestStore _selectedRequestStore;
         private RequestsStore _requestsStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
 
         public RequestViewerViewModel RequestViewerViewModel { get; }
 
-        public MainViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore)
+        public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
+        public bool IsModalOpen => _modalNavigationStore.IsOpen;
+
+        public MainViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
         {
             _selectedRequestStore = selectedRequestStore;
             _requestsStore = requestsStore;
+            _modalNavigationStore = modalNavigationStore;
+            RequestViewerViewModel = RequestViewerViewModel.LoadViewModel(requestsStore, selectedRequestStore, modalNavigationStore);
 
-            RequestViewerViewModel = RequestViewerViewModel.LoadViewModel(requestsStore, selectedRequestStore);
+            _modalNavigationStore.CurrentViewModelChanged += ModalNavigationStore_CurrentViewModelChanged;
+        }
+
+        private void ModalNavigationStore_CurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentModalViewModel));
+            OnPropertyChanged(nameof(IsModalOpen));
+        }
+
+        protected override void Dispose()
+        {
+            _modalNavigationStore.CurrentViewModelChanged -= ModalNavigationStore_CurrentViewModelChanged;
+
+            base.Dispose();
         }
     }
 }

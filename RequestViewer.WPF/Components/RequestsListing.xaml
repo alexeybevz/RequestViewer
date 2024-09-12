@@ -38,10 +38,6 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Padding"
-                            Value="5" />
-                    <Setter Property="Margin"
-                            Value="10 0 0 0" />
                     <Setter Property="HorizontalContentAlignment"
                             Value="Stretch" />
                 </Style>

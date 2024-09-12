@@ -17,6 +17,7 @@ namespace RequestViewer.WPF
     {
         private readonly SelectedRequestStore _selectedRequestStore;
         private readonly RequestsStore _requestsStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
         private readonly RequestViewerDbContextFactory _requestViewerDbContextFactory;
 
         private readonly IGetAllRequestsQuery _getAllRequestsQuery;
@@ -35,6 +36,7 @@ namespace RequestViewer.WPF
 
             _requestsStore = new RequestsStore(_getAllRequestsQuery, null, null, null, _approveRequestCommand, _rejectRequestCommand);
             _selectedRequestStore = new SelectedRequestStore(_requestsStore);
+            _modalNavigationStore = new ModalNavigationStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -45,7 +47,7 @@ namespace RequestViewer.WPF
             }
 
             MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel(_selectedRequestStore, _requestsStore);
+            MainWindow.DataContext = new MainViewModel(_selectedRequestStore, _requestsStore, _modalNavigationStore);
             MainWindow.Show();
 
             base.OnStartup(e);
