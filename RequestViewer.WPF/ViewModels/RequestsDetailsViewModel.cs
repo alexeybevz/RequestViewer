@@ -20,6 +20,7 @@ namespace RequestViewer.WPF.ViewModels
         }
 
         public bool HasCommands => !_selectedRequestStore.SelectedRequest?.IsApproved ?? false;
+        public bool HasSelectedRequest => _selectedRequestStore.SelectedRequest != null;
 
         public ICommand ApproveRequestCommand { get; }
         public ICommand RejectRequestCommand { get; }
@@ -42,6 +43,7 @@ namespace RequestViewer.WPF.ViewModels
             RefreshDayVMs();
 
             OnPropertyChanged(nameof(HasCommands));
+            OnPropertyChanged(nameof(HasSelectedRequest));
         }
 
         private void RefreshDayVMs()
