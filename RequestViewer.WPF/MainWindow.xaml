@@ -19,7 +19,7 @@
             <views:EditRequestViewerView />
         </DataTemplate>
     </Window.Resources>    
-    <Grid Margin="25">
+    <Grid>
         <custom:Modal Panel.ZIndex="1"
                       IsOpen="{Binding IsModalOpen}">
             <ContentControl Margin="50 25"
