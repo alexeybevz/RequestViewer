@@ -18,7 +18,6 @@ namespace RequestViewer.WPF.Commands
 
         public override void Execute(object? parameter)
         {
-            //(youTubeViewer, _youTubeViewersStore, _modalNavigationStore
             var editYouTubeViewerViewModel = new EditRequestViewModel();
             _modalNavigationStore.CurrentViewModel = editYouTubeViewerViewModel;
         }
