@@ -11,5 +11,10 @@ namespace RequestViewer.WPF.Components
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            dropdown.IsOpen = false;
+        }
     }
 }

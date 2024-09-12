@@ -8,6 +8,7 @@ namespace RequestViewer.WPF.ViewModels
         public Request Request { get; private set; }
         public string Name => Request.Name;
         public string ActiveDirectoryCN => Request.ActiveDirectoryCN;
+        public bool HasCommands => Request.IsApproved;
 
         public RequestsListingItemViewModel(Request request, RequestsStore requestsStore)
         {

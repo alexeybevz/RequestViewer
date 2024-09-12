@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DropdownMenu.WPF" Version="1.0.0" />
+    <PackageReference Include="SimpleModal.WPF" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RequestViewer.Domain\RequestViewer.Domain.csproj" />
     <ProjectReference Include="..\RequestViewer.EntityFramework\RequestViewer.EntityFramework.csproj" />
   </ItemGroup>

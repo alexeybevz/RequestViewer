@@ -17,9 +17,6 @@
         </CollectionViewSource>
     </UserControl.Resources>    
     <StackPanel>
-        <Grid>
-        <TextBlock Text="Данные" />
-        </Grid>
         <ListBox SelectionMode="Single"
                  ItemsSource="{Binding Source={StaticResource RequestsViewSource}}"
                  SelectedItem="{Binding SelectedRequestsListingItemViewModel, Mode=TwoWay}">
@@ -45,6 +42,8 @@
                             Value="5" />
                     <Setter Property="Margin"
                             Value="10 0 0 0" />
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>            
