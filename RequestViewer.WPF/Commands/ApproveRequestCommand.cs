@@ -1,5 +1,4 @@
-﻿using RequestViewer.Domain.Models;
-using RequestViewer.WPF.Stores;
+﻿using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;
 using System;
 using System.Threading.Tasks;

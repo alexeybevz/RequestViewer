@@ -54,20 +54,20 @@ namespace RequestViewer.WPF.ViewModels
                 return;
 
             foreach (var header in _daysOfWeekHeaders)
-                DayVMs.Add(new DayViewModel() { Day = header, IsHeader = true });
+                DayVMs.Add(new DayViewModel(false) { Day = header, IsHeader = true });
 
             var dayOfWeek = (int)(_selectedRequestStore.SelectedRequest.Period.StartDate.DayOfWeek + 6) % 7;
 
             for (int i = 0; i < dayOfWeek; i++)
             {
-                DayVMs.Add(new DayViewModel());
+                DayVMs.Add(new DayViewModel(false));
             }
 
             for (int i = 1; i <= _selectedRequestStore.SelectedRequest.Period.EndDate.Day; i++)
             {
                 var dt = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i);
 
-                DayVMs.Add(new DayViewModel()
+                DayVMs.Add(new DayViewModel(false)
                 {
                     Day = dt.ToString("dd.MM.yyyy"),
                     IsHeader = false,

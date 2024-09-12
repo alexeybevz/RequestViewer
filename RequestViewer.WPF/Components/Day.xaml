@@ -78,6 +78,8 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Button Content="{Binding Day}" />
+        <Button Content="{Binding Day}"
+                Command="{Binding ChangeDayStateCommand}"
+                Cursor="Hand" />
     </Grid>
 </UserControl>

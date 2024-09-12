@@ -1,4 +1,7 @@
-﻿namespace RequestViewer.WPF.ViewModels
+﻿using System.Windows.Input;
+using RequestViewer.WPF.Commands;
+
+namespace RequestViewer.WPF.ViewModels
 {
     public class DayViewModel : ViewModelBase
     {
@@ -29,6 +32,17 @@
         {
             get { return _isApproved; }
             set { _isApproved = value; OnPropertyChanged(nameof(IsApproved)); }
+        }
+
+        public bool IsCanEdit { get; }
+
+        public ICommand ChangeDayStateCommand { get; }
+
+        public DayViewModel(bool isCanEdit)
+        {
+            IsCanEdit = isCanEdit;
+
+            ChangeDayStateCommand = new ChangeDayStateCommand(this);
         }
     }
 }

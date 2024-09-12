@@ -123,7 +123,7 @@ namespace RequestViewer.WPF.ViewModels
 
         private void AddRequest(Request request)
         {
-            var vm = new RequestsListingItemViewModel(request, _requestsStore, _modalNavigationStore);
+            var vm = new RequestsListingItemViewModel(request, _requestsStore, _modalNavigationStore, _selectedRequestStore);
             _requestsListingItemViewModels.Add(vm);
         }
 

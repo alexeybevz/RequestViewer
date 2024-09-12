@@ -15,11 +15,11 @@ namespace RequestViewer.WPF.ViewModels
         public ICommand EditRequestCommand { get; }
         public ICommand DeleteRequestCommand { get; }
 
-        public RequestsListingItemViewModel(Request request, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
+        public RequestsListingItemViewModel(Request request, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, SelectedRequestStore selectedRequestStore)
         {
             Request = request;
 
-            EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore);
+            EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore, selectedRequestStore);
             //DeleteRequestCommand = new DeleteYouTubeViewerCommand(this, youTubeViewersStore);
         }
 
