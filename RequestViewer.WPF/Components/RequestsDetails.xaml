@@ -27,7 +27,7 @@
             </Grid.Style>
             <TextBlock Grid.Column="0"
                        TextWrapping="Wrap"
-                       Text="Выделите заявку, чтобы увидеть подробную информацию по ней"
+                       Text="Выделите заявку, чтобы увидеть по ней подробную информацию"
                        FontSize="16"
                        FontWeight="Bold"
                        TextAlignment="Center"/>
@@ -54,7 +54,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
                   HorizontalAlignment="Center">
-                <Label Content="Выбор дней, доступных для редактирования нарядов"
+                <Label Content="Выбор дней, доступных для редактирования"
                        FontWeight="Bold" />
             </Grid>
             <Grid Grid.Row="1"
