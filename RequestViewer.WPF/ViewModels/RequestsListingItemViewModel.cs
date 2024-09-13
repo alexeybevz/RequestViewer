@@ -20,7 +20,7 @@ namespace RequestViewer.WPF.ViewModels
             Request = request;
 
             EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore, selectedRequestStore);
-            //DeleteRequestCommand = new DeleteYouTubeViewerCommand(this, youTubeViewersStore);
+            DeleteRequestCommand = new DeleteRequestCommand(this, requestsStore, selectedRequestStore);
         }
 
         public void Update(Request request)

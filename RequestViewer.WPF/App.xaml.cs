@@ -22,6 +22,7 @@ namespace RequestViewer.WPF
 
         private readonly IGetAllRequestsQuery _getAllRequestsQuery;
         private readonly IUpdateRequestCommand _updateRequestCommand;
+        private readonly IDeleteRequestCommand _deleteRequestCommand;
         private readonly IApproveRequestCommand _approveRequestCommand;
         private readonly IRejectRequestCommand _rejectRequestCommand;
 
@@ -33,10 +34,17 @@ namespace RequestViewer.WPF
 
             _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory, new GetAllUsersQuery(_requestViewerDbContextFactory));
             _updateRequestCommand = new UpdateRequestCommand(_requestViewerDbContextFactory);
+            _deleteRequestCommand = new DeleteRequestCommand(_requestViewerDbContextFactory);
             _approveRequestCommand = new ApproveRequestCommand(_requestViewerDbContextFactory);
             _rejectRequestCommand = new RejectRequestCommand(_requestViewerDbContextFactory);
 
-            _requestsStore = new RequestsStore(_getAllRequestsQuery, null, _updateRequestCommand, null, _approveRequestCommand, _rejectRequestCommand);
+            _requestsStore = new RequestsStore(
+                _getAllRequestsQuery,
+                null,
+                _updateRequestCommand,
+                _deleteRequestCommand,
+                _approveRequestCommand,
+                _rejectRequestCommand);
             _selectedRequestStore = new SelectedRequestStore(_requestsStore);
             _modalNavigationStore = new ModalNavigationStore();
         }
