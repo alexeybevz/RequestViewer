@@ -21,6 +21,7 @@ namespace RequestViewer.WPF
         private readonly RequestViewerDbContextFactory _requestViewerDbContextFactory;
 
         private readonly IGetAllRequestsQuery _getAllRequestsQuery;
+        private readonly IUpdateRequestCommand _updateRequestCommand;
         private readonly IApproveRequestCommand _approveRequestCommand;
         private readonly IRejectRequestCommand _rejectRequestCommand;
 
@@ -31,10 +32,11 @@ namespace RequestViewer.WPF
             _requestViewerDbContextFactory = new RequestViewerDbContextFactory(new DbContextOptionsBuilder().UseSqlite(connectionString).Options);
 
             _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory, new GetAllUsersQuery(_requestViewerDbContextFactory));
+            _updateRequestCommand = new UpdateRequestCommand(_requestViewerDbContextFactory);
             _approveRequestCommand = new ApproveRequestCommand(_requestViewerDbContextFactory);
             _rejectRequestCommand = new RejectRequestCommand(_requestViewerDbContextFactory);
 
-            _requestsStore = new RequestsStore(_getAllRequestsQuery, null, null, null, _approveRequestCommand, _rejectRequestCommand);
+            _requestsStore = new RequestsStore(_getAllRequestsQuery, null, _updateRequestCommand, null, _approveRequestCommand, _rejectRequestCommand);
             _selectedRequestStore = new SelectedRequestStore(_requestsStore);
             _modalNavigationStore = new ModalNavigationStore();
         }

@@ -54,7 +54,6 @@
                                                     Property="Background"
                                                     Value="Transparent" />
                                         </Trigger>
-
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
