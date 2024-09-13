@@ -65,7 +65,7 @@ namespace RequestViewer.WPF.ViewModels
 
             for (int i = 1; i <= _selectedRequestStore.SelectedRequest.Period.EndDate.Day; i++)
             {
-                var dt = new System.DateTime(2024, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i);
+                var dt = new System.DateTime(_selectedRequestStore.SelectedRequest.Period.EndDate.Year, _selectedRequestStore.SelectedRequest.Period.EndDate.Month, i);
 
                 DayVMs.Add(new DayViewModel(false)
                 {
