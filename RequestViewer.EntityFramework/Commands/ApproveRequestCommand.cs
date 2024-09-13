@@ -18,15 +18,12 @@ namespace RequestViewer.EntityFramework.Commands
         {
             using (var context = _contextFactory.Create())
             {
-                foreach (var day in request.Dates)
-                {
-                    var requestDto = new RequestDto() { Id = day.RequestId };
+                var requestDto = new RequestDto() { Id = request.Id };
 
-                    context.Attach(requestDto);
-                    requestDto.IsApproved = request.IsApproved;
+                context.Attach(requestDto);
+                requestDto.IsApproved = request.IsApproved;
 
-                    await context.SaveChangesAsync();
-                }
+                await context.SaveChangesAsync();
             }
         }
     }

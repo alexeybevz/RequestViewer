@@ -61,7 +61,7 @@ namespace RequestViewer.WPF.Stores
             }
         }
 
-        private void RequestsStore_RequestDeleted(Guid id)
+        private void RequestsStore_RequestDeleted(int id)
         {
             if (SelectedRequest?.Id == id)
             {

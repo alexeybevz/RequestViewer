@@ -1,6 +1,5 @@
 ﻿using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Stores;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -89,7 +88,7 @@ namespace RequestViewer.WPF.ViewModels
             }
         }
 
-        private void RequestsStore_RequestDeleted(Guid id)
+        private void RequestsStore_RequestDeleted(int id)
         {
             var vm = _requestsListingItemViewModels.FirstOrDefault(x => x.Request?.Id == id);
 

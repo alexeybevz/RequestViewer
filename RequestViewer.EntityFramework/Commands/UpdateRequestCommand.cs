@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using RequestViewer.Domain.Commands;
 using RequestViewer.Domain.Models;
 using RequestViewer.EntityFramework.DTOs;
@@ -21,34 +22,34 @@ namespace RequestViewer.EntityFramework.Commands
 
             using (var context = _requestViewerDbContextFactory.Create())
             {
-                var requests = context.Requests
-                    .Where(r => r.UserName == request.UserName && r.PeriodId == request.Period.PeriodId)
+                var requestDays = context.Requests
+                    .Include(r => r.RequestsDays)
+                    .Where(r => r.Id == request.Id)
+                    .SelectMany(r => r.RequestsDays).ToList()
                     .ToList();
 
                 // delete closed days
-                foreach (var req in requests)
+                foreach (var reqDay in requestDays)
                 {
-                    if (days.Contains(req.AllowedDate))
+                    if (days.Contains(reqDay.AllowedDate))
                         continue;
 
-                    context.Remove(req);
+                    context.Remove(reqDay);
                 }
 
                 // add opened days
                 foreach (var day in days)
                 {
-                    if (requests.Exists(r => r.AllowedDate == day))
+                    if (requestDays.Exists(r => r.AllowedDate == day))
                         continue;
 
-                    var requestDto = new RequestDto()
+                    var requestDayDto = new RequestDayDto()
                     {
-                        UserName = request.UserName,
+                        RequestId = request.Id,
                         AllowedDate = day,
-                        IsApproved = request.IsApproved,
-                        PeriodId = request.Period.PeriodId,
                     };
 
-                    context.Add(requestDto);
+                    context.Add(requestDayDto);
                 }
 
                 await context.SaveChangesAsync();

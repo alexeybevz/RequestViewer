@@ -39,7 +39,7 @@ namespace RequestViewer.WPF.Stores
         public event Action RequestsLoaded;
         public event Action<Request> RequestAdded;
         public event Action<Request> RequestUpdated;
-        public event Action<Guid> RequestDeleted;
+        public event Action<int> RequestDeleted;
         public event Action<Request> RequestApproved;
         public event Action<Request> RequestRejected;
 
@@ -79,7 +79,7 @@ namespace RequestViewer.WPF.Stores
             RequestUpdated?.Invoke(request);
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(int id)
         {
             await _deleteRequestCommand.Execute(id);
 
@@ -107,7 +107,7 @@ namespace RequestViewer.WPF.Stores
 
         public async Task Reject(Request request)
         {
-            await _rejectRequestCommand.Execute(request);
+            await _rejectRequestCommand.Execute(request.Id);
 
             RequestRejected?.Invoke(request);
         }

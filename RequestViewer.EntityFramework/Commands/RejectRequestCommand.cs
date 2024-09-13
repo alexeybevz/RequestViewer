@@ -1,5 +1,4 @@
 ﻿using RequestViewer.Domain.Commands;
-using RequestViewer.Domain.Models;
 using RequestViewer.EntityFramework.DTOs;
 using System.Threading.Tasks;
 
@@ -14,17 +13,14 @@ namespace RequestViewer.EntityFramework.Commands
             _contextFactory = requestViewerDbContextFactory;
         }
 
-        public async Task Execute(Request request)
+        public async Task Execute(int id)
         {
             using (var context = _contextFactory.Create())
             {
-                foreach (var day in request.Dates)
-                {
-                    var requestDto = new RequestDto() { Id = day.RequestId };
+                var requestDto = new RequestDto() { Id = id };
 
-                    context.Remove(requestDto);
-                    await context.SaveChangesAsync();
-                }
+                context.Remove(requestDto);
+                await context.SaveChangesAsync();
             }
         }
     }

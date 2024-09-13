@@ -29,12 +29,12 @@ namespace RequestViewer.WPF.Commands
 
             var request = new Request()
             {
+                Id = _request.Id,
                 ActiveDirectoryCN = _request.ActiveDirectoryCN,
                 UserName = _request.UserName,
                 Period = _request.Period,
                 IsApproved = _request.IsApproved,
-                Dates = new List<Day>(),
-                
+                Dates = new List<Day>()
             };
 
             foreach (var dayVm in dayVms)

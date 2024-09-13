@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace RequestViewer.Domain.Models
 {
     public class Request
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string ActiveDirectoryCN { get; set; }
         public Period Period { get; set; }

@@ -2,13 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using RequestViewer.EntityFramework;
 
 namespace RequestViewer.EntityFramework.Migrations
 {
     [DbContext(typeof(RequestViewerDbContext))]
-    partial class RequestViewerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240913101036_AddTableRequestDay")]
+    partial class AddTableRequestDay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
