@@ -9,12 +9,17 @@ namespace RequestViewer.WPF.Commands
 {
     public class OpenAddRequestCommand : AsyncCommandBase
     {
+        private readonly RequestsStore _requestsStore;
         private readonly UsersStore _usersStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly PeriodsStore _periodsStore;
 
-        public OpenAddRequestCommand(UsersStore usersStore, ModalNavigationStore modalNavigationStore, PeriodsStore periodsStore)
+        private IEnumerable<User> _selectedUsers;
+        private Period _period;
+
+        public OpenAddRequestCommand(RequestsStore requestsStore, UsersStore usersStore, ModalNavigationStore modalNavigationStore, PeriodsStore periodsStore)
         {
+            _requestsStore = requestsStore;
             _usersStore = usersStore;
             _modalNavigationStore = modalNavigationStore;
             _periodsStore = periodsStore;
@@ -31,6 +36,8 @@ namespace RequestViewer.WPF.Commands
 
         private async void OnUsersSelected(IEnumerable<User> selectedUsers)
         {
+            _selectedUsers = selectedUsers;
+
             var vm = new ChoicePeriodViewModel(_periodsStore);
             _modalNavigationStore.CurrentViewModel = vm;
             vm.PeriodSelected += OnPeriodSelected;
@@ -40,7 +47,10 @@ namespace RequestViewer.WPF.Commands
 
         private void OnPeriodSelected(Period period)
         {
-            MessageBox.Show(period.StartDate.ToShortDateString());
+            _period = period;
+
+            var vm = new AddRequestViewModel(_requestsStore, _modalNavigationStore, _selectedUsers, _period);
+            _modalNavigationStore.CurrentViewModel = vm;
         }
     }
 }

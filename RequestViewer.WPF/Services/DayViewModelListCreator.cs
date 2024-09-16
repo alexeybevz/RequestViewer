@@ -9,33 +9,34 @@ namespace RequestViewer.WPF.Services
     {
         private static readonly string[] DaysOfWeekHeaders = {"ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"};
 
-        public static IEnumerable<DayViewModel> Create(Request request, bool isCanEdit)
+        public static IEnumerable<DayViewModel> Create(Period period, IList<Day> openDays, bool isApproved, bool isCanEdit)
         {
             var vms = new List<DayViewModel>();
 
-            if (request == null)
+            if (period == null)
                 return vms;
 
             foreach (var header in DaysOfWeekHeaders)
                 vms.Add(new DayViewModel(false) { Day = header, IsHeader = true });
 
-            var dayOfWeek = (int)(request.Period.StartDate.DayOfWeek + 6) % 7;
+            var dayOfWeek = (int)(period.StartDate.DayOfWeek + 6) % 7;
 
             for (int i = 0; i < dayOfWeek; i++)
             {
                 vms.Add(new DayViewModel(false));
             }
 
-            for (int i = 1; i <= request.Period.EndDate.Day; i++)
+            for (int i = 1; i <= period.EndDate.Day; i++)
             {
-                var dt = new System.DateTime(request.Period.EndDate.Year, request.Period.EndDate.Month, i);
+                var dt = new System.DateTime(period.EndDate.Year, period.EndDate.Month, i);
+
 
                 vms.Add(new DayViewModel(isCanEdit)
                 {
                     Day = dt.ToString("dd.MM.yyyy"),
                     IsHeader = false,
-                    IsOpen = request.Dates?.Select(d => d.Date).Contains(dt) ?? false,
-                    IsApproved = request.IsApproved
+                    IsOpen = openDays?.Select(d => d.Date).Contains(dt) ?? false,
+                    IsApproved = isApproved
                 });
             }
 

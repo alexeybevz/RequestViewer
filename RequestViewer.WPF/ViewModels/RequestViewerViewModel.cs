@@ -15,7 +15,7 @@ namespace RequestViewer.WPF.ViewModels
             RequestsDetailsViewModel = new RequestsDetailsViewModel(selectedRequestStore, requestsStore);
 
             LoadRequestsCommand = new LoadRequestsCommand(this, requestsStore);
-            OpenAddRequestCommand = new OpenAddRequestCommand(usersStore, modalNavigationStore, periodsStore);
+            OpenAddRequestCommand = new OpenAddRequestCommand(requestsStore, usersStore, modalNavigationStore, periodsStore);
         }
 
         public ICommand LoadRequestsCommand { get; set; }

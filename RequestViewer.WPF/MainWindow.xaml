@@ -15,6 +15,9 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
     <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:AddRequestViewModel}">
+            <views:AddRequestViewerView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vms:EditRequestViewModel}">
             <views:EditRequestViewerView />
         </DataTemplate>
