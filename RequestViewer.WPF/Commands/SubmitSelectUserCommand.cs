@@ -16,7 +16,7 @@ namespace RequestViewer.WPF.Commands
         public override async Task ExecuteAsync(object? parameter)
         {
             _choiceUsersViewModel.FilterString = "";
-            var users = _choiceUsersViewModel.Users.OfType<UserViewModel>().Select(u => u.User).ToList();
+            var users = _choiceUsersViewModel.Users.OfType<UserViewModel>().Where(u => u.IsSelected).Select(u => u.User).ToList();
 
             _choiceUsersViewModel.SelectedUsers = users;
         }

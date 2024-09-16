@@ -36,7 +36,7 @@ namespace RequestViewer.EntityFramework.Queries
                     ActiveDirectoryCN = users.FirstOrDefault(u => u.Login == r.UserName)?.ActiveDirectoryCN ?? r.UserName,
                     Period = new Period()
                     {
-                        PeriodId = r.PeriodId,
+                        Id = r.PeriodId,
                         StartDate = r.Period.StartDate,
                         EndDate = r.Period.EndDate,
                         IsEnabled = r.Period.IsEnabled,
@@ -45,7 +45,7 @@ namespace RequestViewer.EntityFramework.Queries
                     Dates = r.RequestsDays.Select(d => new Day() { Id = d.Id, Date = d.AllowedDate, RequestId = r.Id}).ToList()
                 })
                 .OrderBy(x => x.IsApproved)
-                .ThenBy(x => x.Period.PeriodId)
+                .ThenBy(x => x.Period.Id)
                 .ThenBy(x => x.ActiveDirectoryCN)
                 .ToList();
             }

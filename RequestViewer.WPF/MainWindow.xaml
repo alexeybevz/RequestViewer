@@ -21,6 +21,9 @@
         <DataTemplate DataType="{x:Type vms:ChoiceUsersViewModel}">
             <views:ChoiceUsersView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:ChoicePeriodViewModel}">
+            <views:ChoicePeriodView />
+        </DataTemplate>
     </Window.Resources>    
     <Grid>
         <custom:Modal Panel.ZIndex="1"

@@ -13,7 +13,6 @@ namespace RequestViewer.WPF.ViewModels
     public class ChoiceUsersViewModel : ViewModelBase
     {
         private readonly UsersStore _usersStore;
-        private readonly ModalNavigationStore _modalNavigationStore;
         private ICollectionView _users;
         private string _filterString = string.Empty;
         private IEnumerable<User> _selectedUsers;
@@ -54,11 +53,10 @@ namespace RequestViewer.WPF.ViewModels
 
         public ICommand SubmitCommand { get; }
 
-        public ChoiceUsersViewModel(UsersStore usersStore, ModalNavigationStore modalNavigationStore)
+        public ChoiceUsersViewModel(UsersStore usersStore)
         {
             _usersStore = usersStore;
             _usersStore.UsersLoaded += UsersStore_UsersLoaded;
-            _modalNavigationStore = modalNavigationStore;
 
             SubmitCommand = new SubmitSelectUserCommand(this);
         }
