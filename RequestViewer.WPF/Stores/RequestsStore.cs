@@ -16,6 +16,7 @@ namespace RequestViewer.WPF.Stores
         private readonly IApproveRequestCommand _approveRequestCommand;
         private readonly IRejectRequestCommand _rejectRequestCommand;
         private readonly List<Request> _requests;
+
         public IEnumerable<Request> Requests => _requests;
 
         public RequestsStore(

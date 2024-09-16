@@ -18,6 +18,9 @@
         <DataTemplate DataType="{x:Type vms:EditRequestViewModel}">
             <views:EditRequestViewerView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:ChoiceUsersViewModel}">
+            <views:ChoiceUsersView />
+        </DataTemplate>
     </Window.Resources>    
     <Grid>
         <custom:Modal Panel.ZIndex="1"

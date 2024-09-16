@@ -20,7 +20,8 @@
                 <Button FontSize="16"
                         Content="Открыть доступ"
                         Width="150"
-                        HorizontalAlignment="Left" />
+                        HorizontalAlignment="Left"
+                        Command="{Binding OpenAddRequestCommand}"/>
             </Grid>
 
             <Grid Grid.Row="1"
