@@ -38,7 +38,7 @@ namespace RequestViewer.WPF.ViewModels
             _period = period;
             DayVMs = new ObservableCollection<DayViewModel>();
 
-            //SubmitCommand = new EditRequestCommand(this, modalNavigationStore, requestsStore, request);
+            SubmitCommand = new AddRequestCommand(this, modalNavigationStore, requestsStore);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
 
             RefreshDayVMs(period);
