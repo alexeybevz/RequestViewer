@@ -1,17 +1,11 @@
-﻿using RequestViewer.Domain.Models;
+﻿using System;
+using RequestViewer.Domain.Models;
 
 namespace RequestViewer.WPF.ViewModels
 {
     public class UserViewModel : ViewModelBase
     {
         private bool _isSelected;
-
-        public UserViewModel(User value)
-        {
-            User = value;
-        }
-
-        public User User { get; }
 
         public bool IsSelected
         {
@@ -20,7 +14,17 @@ namespace RequestViewer.WPF.ViewModels
             {
                 _isSelected = value;
                 OnPropertyChanged(nameof(IsSelected));
+                IsSelectedChanged?.Invoke();
             }
+        }
+
+        public User User { get; }
+
+        public event Action IsSelectedChanged;
+
+        public UserViewModel(User value)
+        {
+            User = value;
         }
 
         public override string ToString()

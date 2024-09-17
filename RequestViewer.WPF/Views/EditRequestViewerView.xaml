@@ -72,8 +72,7 @@
             <WrapPanel HorizontalAlignment="Center">
                 <Button Content="Сохранить"
                         Command="{Binding SubmitCommand}"
-                        Style="{StaticResource ApproveButton}"
-                        Cursor="Hand" />
+                        Style="{StaticResource ApproveButton}" />
                 <Button Content="Отменить"
                         Command="{Binding CancelCommand}"
                         Style="{StaticResource RejectButton}"

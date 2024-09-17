@@ -35,6 +35,7 @@
                             Content="{Binding CurrentModalViewModel}" />
         </custom:Modal>
 
-        <views:RequestViewerView DataContext="{Binding RequestViewerViewModel}" />
+        <views:RequestViewerView DataContext="{Binding RequestViewerViewModel}"
+                                 Padding="30" />
     </Grid>
 </Window>

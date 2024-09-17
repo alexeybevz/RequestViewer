@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using ModalControl;
 using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Commands;
 using RequestViewer.WPF.Stores;
@@ -49,16 +51,20 @@ namespace RequestViewer.WPF.ViewModels
             }
         }
 
+        public bool CanSubmit => Users.OfType<UserViewModel>().Count(u => u.IsSelected) > 0;
+
         public event Action<IEnumerable<User>> UsersSelected;
 
         public ICommand SubmitCommand { get; }
+        public ICommand CancelCommand { get; }
 
-        public ChoiceUsersViewModel(UsersStore usersStore)
+        public ChoiceUsersViewModel(UsersStore usersStore, ModalNavigationStore modalNavigationStore)
         {
             _usersStore = usersStore;
             _usersStore.UsersLoaded += UsersStore_UsersLoaded;
 
             SubmitCommand = new SubmitSelectUserCommand(this);
+            CancelCommand = new CloseModalCommand(modalNavigationStore);
         }
 
         private void UsersStore_UsersLoaded()
@@ -68,6 +74,7 @@ namespace RequestViewer.WPF.ViewModels
                 : _usersStore.Users.OrderBy(u => u.ActiveDirectoryCN).ToList();
 
             var items = users.Select(u => new UserViewModel(u)).ToList();
+            items.ForEach(x => x.IsSelectedChanged += () => OnPropertyChanged(nameof(CanSubmit)));
 
             Users = CollectionViewSource.GetDefaultView(items);
             Users.Filter += OnUsersFiltered;

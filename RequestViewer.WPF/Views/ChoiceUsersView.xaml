@@ -18,42 +18,54 @@
                    FontWeight="Bold"
                    HorizontalAlignment="Center" />
         </Grid>
-        <Grid Grid.Row="1"
-              Margin="10 10 10 0">
+        <Grid Grid.Row="1" Margin="0 20 0 20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="100*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
-                   Name="FilterLabel"
                    Content="Фильтр" />
             <TextBox Grid.Column="1"
-                     Name="FilterTextBox"
-                     Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="Для применения фильтра нажмите клавишу ENTER" />
+                     Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
-        <Grid Grid.Row="2"
-              Margin="10 0 10 0">
-            <ListBox x:Name="ChoiceUsersListBox"
-                     ItemsSource="{Binding Users}"
-                     Margin="0,10,0,0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <CheckBox Width="265"
-                                      IsChecked="{Binding IsSelected}"
-                                      Content="{Binding}"
-                                      FontSize="14" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-        <Grid Grid.Row="3"
-              Margin="10 0 10 0">
-            <Button Content="Подтвердить"
-                    Command="{Binding SubmitCommand}"
-                    Margin="0,10,0,-10" />
+        <Border Grid.Row="2"
+                BorderBrush="{StaticResource BorderPrimary}"
+                BorderThickness="1"
+                CornerRadius="5"
+                SnapsToDevicePixels="True">
+            <Grid MinWidth="350">
+                <Grid.OpacityMask>
+                    <VisualBrush Visual="{Binding ElementName=border}" />
+                </Grid.OpacityMask>
+                <Border x:Name="border"
+                        Background="White"
+                        CornerRadius="5" />
+                    <ListBox x:Name="ChoiceUsersListBox"
+                             ItemsSource="{Binding Users}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox Width="265"
+                                              IsChecked="{Binding IsSelected}"
+                                              Content="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                <Border/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="3" Margin="0 20 0 0">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Content="Подтвердить"
+                        Command="{Binding SubmitCommand}"
+                        IsEnabled="{Binding CanSubmit}"
+                        Style="{StaticResource ApproveButton}" />
+                <Button Content="Отменить"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource RejectButton}"
+                        Margin="5 0 0 0" />
+            </WrapPanel>
         </Grid>
     </Grid>
 </UserControl>

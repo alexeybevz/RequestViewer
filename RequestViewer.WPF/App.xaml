@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RequestViewer.WPF">
     <Application.Resources>
+        <SolidColorBrush x:Key="BorderPrimary"
+                         Color="#1c1c1c" />
+
         <Style x:Key="ApproveButton"
                TargetType="Button">
             <Setter Property="Foreground"

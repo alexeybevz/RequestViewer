@@ -26,7 +26,7 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            var vm = new ChoiceUsersViewModel(_usersStore);
+            var vm = new ChoiceUsersViewModel(_usersStore, _modalNavigationStore);
             _modalNavigationStore.CurrentViewModel = vm;
             vm.UsersSelected += OnUsersSelected;
 
