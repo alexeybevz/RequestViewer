@@ -59,7 +59,7 @@
             </Grid>
             <Grid Grid.Row="1"
                   Width="Auto"
-                  Margin="0 10 0 10">
+                  Margin="0 20 0 0">
                 <ListBox ItemsSource="{Binding DayVMs}"
                          BorderThickness="0">
                     <ListBox.ItemsPanel>
@@ -107,18 +107,16 @@
                 </ListBox>
             </Grid>
             <Grid Grid.Row="2"
-                  Margin="10 0 10 0"
+                  Margin="0 20 0 0"
                   Visibility="{Binding HasCommands, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <WrapPanel HorizontalAlignment="Center">
                     <Button Content="Согласовать"
                             Command="{Binding ApproveRequestCommand}"
-                            Style="{StaticResource ApproveButton}"
-                            Cursor="Hand" />
+                            Style="{StaticResource ApproveButton}" />
                     <Button Content="Отклонить"
                             Command="{Binding RejectRequestCommand}"
                             Style="{StaticResource RejectButton}"
-                            Margin="5 0 0 0"
-                            Cursor="Hand" />
+                            Margin="5 0 0 0" />
                 </WrapPanel>
             </Grid>
         </Grid>
