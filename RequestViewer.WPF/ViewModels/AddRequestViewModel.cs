@@ -27,6 +27,8 @@ namespace RequestViewer.WPF.ViewModels
             set { _days = value; OnPropertyChanged(nameof(DayVMs)); }
         }
 
+        public bool CanSubmit => DayVMs.Count(x => x.IsOpen) > 0;
+
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
@@ -49,7 +51,11 @@ namespace RequestViewer.WPF.ViewModels
             DayVMs.Clear();
 
             var vms = DayViewModelListCreator.Create(period, new List<Day>(), true, true).ToList();
-            vms.ForEach(vm => DayVMs.Add(vm));
+            vms.ForEach(vm =>
+            {
+                vm.IsOpenChanged += () => OnPropertyChanged(nameof(CanSubmit));
+                DayVMs.Add(vm);
+            });
         }
     }
 }
