@@ -23,6 +23,7 @@ namespace RequestViewer.WPF
         private readonly RequestViewerDbContextFactory _requestViewerDbContextFactory;
 
         private readonly IGetAllRequestsQuery _getAllRequestsQuery;
+        private readonly ICreateRequestCommand _createRequestCommand;
         private readonly IUpdateRequestCommand _updateRequestCommand;
         private readonly IDeleteRequestCommand _deleteRequestCommand;
         private readonly IApproveRequestCommand _approveRequestCommand;
@@ -35,6 +36,7 @@ namespace RequestViewer.WPF
             _requestViewerDbContextFactory = new RequestViewerDbContextFactory(new DbContextOptionsBuilder().UseSqlite(connectionString).Options);
 
             _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory, new GetAllUsersQuery(_requestViewerDbContextFactory));
+            _createRequestCommand = new CreateRequestCommand(_requestViewerDbContextFactory);
             _updateRequestCommand = new UpdateRequestCommand(_requestViewerDbContextFactory);
             _deleteRequestCommand = new DeleteRequestCommand(_requestViewerDbContextFactory);
             _approveRequestCommand = new ApproveRequestCommand(_requestViewerDbContextFactory);
@@ -42,7 +44,7 @@ namespace RequestViewer.WPF
 
             _requestsStore = new RequestsStore(
                 _getAllRequestsQuery,
-                null,
+                _createRequestCommand,
                 _updateRequestCommand,
                 _deleteRequestCommand,
                 _approveRequestCommand,

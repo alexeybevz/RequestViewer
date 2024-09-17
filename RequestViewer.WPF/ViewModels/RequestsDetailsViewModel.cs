@@ -48,6 +48,10 @@ namespace RequestViewer.WPF.ViewModels
             DayVMs.Clear();
 
             var request = _selectedRequestStore.SelectedRequest;
+
+            if (request == null)
+                return;
+
             var vms = DayViewModelListCreator.Create(request.Period, request.Dates, request.IsApproved, false).ToList();
             vms.ForEach(vm => DayVMs.Add(vm));
         }
