@@ -8,7 +8,7 @@ namespace RequestViewer.WPF.ViewModels
     public class RequestsListingItemViewModel : ViewModelBase
     {
         public Request Request { get; private set; }
-        public string Name => Request.Name;
+        public RequestsListingGroupItemViewModel Name { get; private set; }
         public string ActiveDirectoryCN => Request.ActiveDirectoryCN;
         public bool HasCommands => Request.IsApproved;
 
@@ -18,6 +18,8 @@ namespace RequestViewer.WPF.ViewModels
         public RequestsListingItemViewModel(Request request, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, SelectedRequestStore selectedRequestStore)
         {
             Request = request;
+
+            Name = new RequestsListingGroupItemViewModel(Request.Name, Request.IsApproved);
 
             EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore, selectedRequestStore);
             DeleteRequestCommand = new DeleteRequestCommand(this, requestsStore, selectedRequestStore);

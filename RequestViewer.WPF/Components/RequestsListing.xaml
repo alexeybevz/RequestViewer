@@ -1,11 +1,12 @@
 ﻿<UserControl x:Class="RequestViewer.WPF.Components.RequestsListing"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RequestViewer.WPF.Components"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" 
+             xmlns:dropdownMenuControl="clr-namespace:DropdownMenuControl;assembly=DropdownMenuControl"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
         <CollectionViewSource x:Key="RequestsViewSource"
@@ -15,7 +16,7 @@
                 <PropertyGroupDescription PropertyName="Name" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-    </UserControl.Resources>    
+    </UserControl.Resources>
     <StackPanel>
         <ListBox SelectionMode="Single"
                  ItemsSource="{Binding Source={StaticResource RequestsViewSource}}"
@@ -24,9 +25,118 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}"
-                                       FontWeight="Bold"
-                                       FontSize="16" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0">
+                                    <TextBlock Text="{Binding Name.GroupName}"
+                                               FontWeight="Bold"
+                                               FontSize="16" />
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <dropdownMenuControl:DropdownMenu x:Name="dropdown"
+                                                                      Margin="10 0 15 0">
+                                        <Border Background="White"
+                                                BorderBrush="Gray"
+                                                BorderThickness="1">
+                                            <StackPanel MinWidth="125">
+                                                <StackPanel.Resources>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Background"
+                                                                Value="#f0f0f0" />
+                                                        <Setter Property="Foreground"
+                                                                Value="Black" />
+                                                        <Setter Property="HorizontalAlignment"
+                                                                Value="Stretch" />
+                                                        <Setter Property="Padding"
+                                                                Value="20 10" />
+                                                        <Setter Property="Cursor"
+                                                                Value="Hand" />
+
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Margin="{TemplateBinding Margin}"
+                                                                            Padding="{TemplateBinding Padding}"
+                                                                            Background="{TemplateBinding Background}">
+                                                                        <ContentPresenter />
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver"
+                                                                     Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                                                            To="#C7C7C7"
+                                                                                            Duration="0:0:0.1" />
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                                <Trigger.ExitActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                                                            To="#f0f0f0"
+                                                                                            Duration="0:0:0.1" />
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Resources>
+                                                <Grid>
+                                                    <Grid.Style>
+                                                        <Style TargetType="Grid">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Name.IsApproved}"
+                                                                             Value="True">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                    <Button Content="Удалить все заявки"
+                                                            Command="{Binding Name.DeleteAllRequestCommand}" />
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.Style>
+                                                        <Style TargetType="Grid">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Name.IsApproved}"
+                                                                             Value="False">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                    <StackPanel>
+                                                        <Button Content="Согласовать все заявки"
+                                                                Command="{Binding Name.ApproveAllRequestCommand}" />
+                                                        <Button Content="Отклонить все заявки"
+                                                                Command="{Binding Name.RejectAllRequestCommand}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </dropdownMenuControl:DropdownMenu>
+                                </Grid>
+                            </Grid>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
@@ -42,6 +152,6 @@
                             Value="Stretch" />
                 </Style>
             </ListBox.ItemContainerStyle>
-        </ListBox>            
+        </ListBox>
     </StackPanel>
 </UserControl>

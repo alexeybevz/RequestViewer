@@ -133,7 +133,7 @@ namespace RequestViewer.WPF.ViewModels
 
         private void ReGroupingRequests(string groupName, string activeDirectoryCN)
         {
-            var vms = _requestsListingItemViewModels.Where(x => x.Name == groupName && x.ActiveDirectoryCN == activeDirectoryCN).ToList();
+            var vms = _requestsListingItemViewModels.Where(x => x.Name.GroupName == groupName && x.ActiveDirectoryCN == activeDirectoryCN).ToList();
             if (vms == null || vms.Count <= 1)
                 return;
 
