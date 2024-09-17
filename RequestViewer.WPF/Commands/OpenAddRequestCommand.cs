@@ -37,7 +37,7 @@ namespace RequestViewer.WPF.Commands
         {
             _selectedUsers = selectedUsers;
 
-            var vm = new ChoicePeriodViewModel(_periodsStore);
+            var vm = new ChoicePeriodViewModel(_periodsStore, _modalNavigationStore);
             _modalNavigationStore.CurrentViewModel = vm;
             vm.PeriodSelected += OnPeriodSelected;
 

@@ -31,14 +31,18 @@ namespace RequestViewer.WPF.ViewModels
             {
                 _selectedPeriod = value;
                 OnPropertyChanged(nameof(SelectedPeriod));
+                OnPropertyChanged(nameof(CanSubmit));
             }
         }
+
+        public bool CanSubmit => SelectedPeriod != null;
 
         public event Action<Period> PeriodSelected;
 
         public ICommand SubmitCommand { get; }
+        public ICommand CancelCommand { get; }
 
-        public ChoicePeriodViewModel(PeriodsStore periodsStore)
+        public ChoicePeriodViewModel(PeriodsStore periodsStore, ModalNavigationStore modalNavigationStore)
         {
             Periods = new ObservableCollection<Period>();
 
@@ -46,6 +50,7 @@ namespace RequestViewer.WPF.ViewModels
             _periodsStore.PeriodsLoaded += PeriodsStoreOnPeriodsLoaded;
 
             SubmitCommand = new SubmitSelectPeriodCommand(this);
+            CancelCommand = new CloseModalCommand(modalNavigationStore);
         }
 
         private void PeriodsStoreOnPeriodsLoaded()
