@@ -30,7 +30,8 @@
                        Text="Выделите заявку, чтобы увидеть по ней подробную информацию"
                        FontSize="16"
                        FontWeight="Bold"
-                       TextAlignment="Center"/>
+                       TextAlignment="Center"
+                       MinWidth="100" />
         </Grid>
     
         <Grid>
@@ -61,7 +62,8 @@
                   Width="Auto"
                   Margin="0 20 0 0">
                 <ListBox ItemsSource="{Binding DayVMs}"
-                         BorderThickness="0">
+                         BorderThickness="0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"
@@ -92,7 +94,6 @@
                                                         Property="Background"
                                                         Value="Transparent" />
                                             </Trigger>
-
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
