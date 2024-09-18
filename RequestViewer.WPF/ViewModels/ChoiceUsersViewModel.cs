@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using ModalControl;
 using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Commands;
 using RequestViewer.WPF.Stores;

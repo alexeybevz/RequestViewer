@@ -108,6 +108,7 @@ namespace RequestViewer.WPF.ViewModels
             }
 
             ReGroupingRequests(request.Name, request.ActiveDirectoryCN);
+            OnPropertyChanged(nameof(SelectedRequestsListingItemViewModel));
         }
 
         private void RequestsStore_RequestRejected(Request request)
@@ -122,8 +123,9 @@ namespace RequestViewer.WPF.ViewModels
 
         private void AddRequest(Request request)
         {
-            var vm = new RequestsListingItemViewModel(request, _requestsStore, _modalNavigationStore, _selectedRequestStore);
-            _requestsListingItemViewModels.Add(vm);
+            var requestsListingGroupItemViewModel = new RequestsListingGroupItemViewModel(request, _requestsStore);
+            var requestsListingItemViewModel = new RequestsListingItemViewModel(request, _requestsStore, _modalNavigationStore, _selectedRequestStore, requestsListingGroupItemViewModel);
+            _requestsListingItemViewModels.Add(requestsListingItemViewModel);
         }
 
         private void RequestsListingItemViewModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
