@@ -18,6 +18,8 @@ namespace RequestViewer.WPF.ViewModels
             set { _days = value; OnPropertyChanged(nameof(DayVMs)); }
         }
 
+        public CheckBoxViewModel CheckBoxViewModel { get; }
+
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
@@ -28,7 +30,20 @@ namespace RequestViewer.WPF.ViewModels
             SubmitCommand = new EditRequestCommand(this, modalNavigationStore, requestsStore, request);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
 
+            CheckBoxViewModel = new CheckBoxViewModel("Выбрать все дни");
+            CheckBoxViewModel.SelectedChanged += CheckBoxViewModelOnSelectedChanged;
+
             RefreshDayVMs(request);
+        }
+
+        private void CheckBoxViewModelOnSelectedChanged(bool isSelected)
+        {
+            var days = DayVMs.Where(d => !d.IsHeader && d.Day != null).ToList();
+
+            foreach (var vm in days)
+            {
+                vm.IsOpen = isSelected;
+            }
         }
 
         private void RefreshDayVMs(Request request)

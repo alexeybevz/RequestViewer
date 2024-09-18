@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
               HorizontalAlignment="Center">
@@ -20,6 +21,11 @@
                    FontWeight="Bold" />
         </Grid>
         <Grid Grid.Row="1"
+              HorizontalAlignment="Left"
+              Margin="5 20 0 0">
+            <components:BaseCheckBox DataContext="{Binding CheckBoxViewModel}" />
+        </Grid>
+        <Grid Grid.Row="2"
               Width="Auto"
               Margin="0 20 0 0">
             <ListBox ItemsSource="{Binding DayVMs}"
@@ -67,7 +73,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="3"
               Margin="0 20 0 0">
             <WrapPanel HorizontalAlignment="Center">
                 <Button Content="Сохранить"

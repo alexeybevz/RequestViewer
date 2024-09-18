@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -27,6 +28,7 @@ namespace RequestViewer.WPF.ViewModels
             set { _days = value; OnPropertyChanged(nameof(DayVMs)); }
         }
 
+        public CheckBoxViewModel CheckBoxViewModel { get; }
         public bool CanSubmit => DayVMs.Count(x => x.IsOpen) > 0;
 
         public ICommand SubmitCommand { get; }
@@ -40,10 +42,23 @@ namespace RequestViewer.WPF.ViewModels
             _period = period;
             DayVMs = new ObservableCollection<DayViewModel>();
 
+            CheckBoxViewModel = new CheckBoxViewModel("Выбрать все дни");
+            CheckBoxViewModel.SelectedChanged += CheckBoxViewModelOnSelectedChanged;
+
             SubmitCommand = new AddRequestCommand(this, modalNavigationStore, requestsStore);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
 
             RefreshDayVMs(period);
+        }
+
+        private void CheckBoxViewModelOnSelectedChanged(bool isSelected)
+        {
+            var days = DayVMs.Where(d => !d.IsHeader && d.Day != null).ToList();
+
+            foreach (var vm in days)
+            {
+                vm.IsOpen = isSelected;
+            }
         }
 
         private void RefreshDayVMs(Period period)
