@@ -26,8 +26,8 @@ namespace RequestViewer.WPF.ViewModels
             Name = requestsListingGroupItemViewModel;
             SortProperty = request.IsApproved + request.ActiveDirectoryCN;
 
-            EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore, selectedRequestStore);
-            DeleteRequestCommand = new DeleteRequestCommand(this, requestsStore, selectedRequestStore);
+            EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore);
+            DeleteRequestCommand = new DeleteRequestCommand(this, requestsStore);
         }
 
         public void Update(Request request)

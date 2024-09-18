@@ -9,20 +9,18 @@ namespace RequestViewer.WPF.Commands
     {
         private RequestsListingItemViewModel _requestsListingItemViewModel;
         private RequestsStore _requestsStore;
-        private SelectedRequestStore _selectedRequestStore;
 
-        public DeleteRequestCommand(RequestsListingItemViewModel requestsListingItemViewModel, RequestsStore requestsStore, SelectedRequestStore selectedRequestStore)
+        public DeleteRequestCommand(RequestsListingItemViewModel requestsListingItemViewModel, RequestsStore requestsStore)
         {
             _requestsListingItemViewModel = requestsListingItemViewModel;
             _requestsStore = requestsStore;
-            _selectedRequestStore = selectedRequestStore;
         }
 
         public override async Task ExecuteAsync(object parameter)
         {
             try
             {
-                await _requestsStore.Delete(_selectedRequestStore.SelectedRequest.Id);
+                await _requestsStore.Delete(_requestsListingItemViewModel.Request.Id);
             }
             catch (Exception ex)
             {
