@@ -21,8 +21,7 @@
                         Content="Открыть доступ"
                         Style="{StaticResource ApproveButton}"
                         HorizontalAlignment="Left"
-                        Command="{Binding OpenAddRequestCommand}"
-                        Cursor="Hand" />
+                        Command="{Binding OpenAddRequestCommand}" />
             </Grid>
 
             <Grid Grid.Row="1"
