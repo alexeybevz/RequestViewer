@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -34,7 +33,7 @@ namespace RequestViewer.WPF.ViewModels
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public AddRequestViewModel(RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, IEnumerable<User> users, Period period)
+        public AddRequestViewModel(RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, IEnumerable<User> users, Period period, bool isApproved)
         {
             _requestsStore = requestsStore;
             _modalNavigationStore = modalNavigationStore;
@@ -45,7 +44,7 @@ namespace RequestViewer.WPF.ViewModels
             CheckBoxViewModel = new CheckBoxViewModel("Выбрать все дни");
             CheckBoxViewModel.SelectedChanged += CheckBoxViewModelOnSelectedChanged;
 
-            SubmitCommand = new AddRequestCommand(this, modalNavigationStore, requestsStore);
+            SubmitCommand = new AddRequestCommand(this, modalNavigationStore, requestsStore, isApproved);
             CancelCommand = new CloseModalCommand(modalNavigationStore);
 
             RefreshDayVMs(period);

@@ -1,0 +1,31 @@
+﻿<Window x:Class="RequestViewer.WPF.AddRequestToUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RequestViewer.WPF"
+        xmlns:modalControl="clr-namespace:ModalControl;assembly=ModalControl"
+        xmlns:views="clr-namespace:RequestViewer.WPF.Views"
+        xmlns:vms="clr-namespace:RequestViewer.WPF.ViewModels"
+        mc:Ignorable="d"
+        Title="Предоставление доступа"
+        Height="750"
+        Width="1000"
+        FontSize="14"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:AddRequestViewModel}">
+            <views:AddRequestViewerView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:ChoicePeriodViewModel}">
+            <views:ChoicePeriodView />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <modalControl:Modal Panel.ZIndex="1"
+                            IsOpen="{Binding IsModalOpen}">
+            <ContentControl Margin="50 25"
+                            Content="{Binding CurrentModalViewModel}" />
+        </modalControl:Modal>
+    </Grid>
+</Window>

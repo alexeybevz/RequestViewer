@@ -1,41 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;
 
 namespace RequestViewer.WPF.Commands
 {
-    public class OpenAddRequestCommand : AsyncCommandBase
+    public class OpenAddRequestToUserCommand : AsyncCommandBase
     {
+        private readonly string _login;
         private readonly RequestsStore _requestsStore;
-        private readonly UsersStore _usersStore;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly PeriodsStore _periodsStore;
+        private readonly UsersStore _usersStore;
 
         private IEnumerable<User> _selectedUsers;
         private Period _period;
 
-        public OpenAddRequestCommand(RequestsStore requestsStore, UsersStore usersStore, ModalNavigationStore modalNavigationStore, PeriodsStore periodsStore)
+        public event Action OnUserNotFound;
+
+        public OpenAddRequestToUserCommand(string login, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, PeriodsStore periodsStore, UsersStore usersStore)
         {
+            _login = login;
             _requestsStore = requestsStore;
-            _usersStore = usersStore;
             _modalNavigationStore = modalNavigationStore;
             _periodsStore = periodsStore;
+            _usersStore = usersStore;
         }
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            var vm = new ChoiceUsersViewModel(_usersStore, _modalNavigationStore);
-            _modalNavigationStore.CurrentViewModel = vm;
-            vm.UsersSelected += OnUsersSelected;
-
             await _usersStore.Load();
-        }
+            var user = _usersStore.Users.FirstOrDefault(u => u.Login == _login);
 
-        private async void OnUsersSelected(IEnumerable<User> selectedUsers)
-        {
-            _selectedUsers = selectedUsers;
+            if (user == null)
+            {
+                OnUserNotFound?.Invoke();
+                return;
+            }
+
+            _selectedUsers = new List<User> { user };
 
             var vm = new ChoicePeriodViewModel(_periodsStore, _modalNavigationStore);
             _modalNavigationStore.CurrentViewModel = vm;
@@ -48,7 +55,7 @@ namespace RequestViewer.WPF.Commands
         {
             _period = period;
 
-            var vm = new AddRequestViewModel(_requestsStore, _modalNavigationStore, _selectedUsers, _period, true);
+            var vm = new AddRequestViewModel(_requestsStore, _modalNavigationStore, _selectedUsers, _period, false);
             _modalNavigationStore.CurrentViewModel = vm;
         }
     }

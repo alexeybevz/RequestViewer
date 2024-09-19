@@ -62,9 +62,45 @@ namespace RequestViewer.WPF
                 context.Database.Migrate();
             }
 
-            MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel(_selectedRequestStore, _requestsStore, _modalNavigationStore, _usersStore, _periodsStore);
-            MainWindow.Show();
+            string key = "";
+            string login = "";
+
+            if (e.Args.Length == 2)
+            {
+                key = e.Args[0];
+                login = e.Args[1];
+            }
+
+            if (key == "-createRequest")
+            {
+                var vm = new AddRequestToUserViewModel(login, _requestsStore, _modalNavigationStore, _periodsStore, _usersStore);
+
+                MainWindow = new AddRequestToUserWindow();
+                MainWindow.DataContext = vm;
+
+                vm.OnErrorOccurs += () =>
+                {
+                    MainWindow.Close();
+                };
+
+                vm.OnExecuted += () =>
+                {
+                    MessageBox.Show("Заявка на открытие доступа отправлена и будет рассмотрена в течение дня.");
+                    MainWindow.Close();
+                };
+                
+                MainWindow.Loaded += (sender, args) =>
+                {
+                    vm.OpenAddRequestToUserCommand?.Execute(null);
+                };
+                MainWindow.Show();
+            }
+            else
+            {
+                MainWindow = new MainWindow();
+                MainWindow.DataContext = new MainViewModel(_selectedRequestStore, _requestsStore, _modalNavigationStore, _usersStore, _periodsStore);
+                MainWindow.Show();
+            }
 
             base.OnStartup(e);
         }

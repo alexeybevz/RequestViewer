@@ -1,5 +1,4 @@
-﻿using System;
-using RequestViewer.WPF.ViewModels;
+﻿using RequestViewer.WPF.ViewModels;
 
 namespace RequestViewer.WPF.Commands
 {

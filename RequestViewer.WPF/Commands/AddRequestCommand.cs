@@ -12,12 +12,14 @@ namespace RequestViewer.WPF.Commands
         private readonly AddRequestViewModel _addRequestViewModel;
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly RequestsStore _requestsStore;
+        private readonly bool _isApproved;
 
-        public AddRequestCommand(AddRequestViewModel addRequestViewModel, ModalNavigationStore modalNavigationStore, RequestsStore requestsStore)
+        public AddRequestCommand(AddRequestViewModel addRequestViewModel, ModalNavigationStore modalNavigationStore, RequestsStore requestsStore, bool isApproved)
         {
             _addRequestViewModel = addRequestViewModel;
             _modalNavigationStore = modalNavigationStore;
             _requestsStore = requestsStore;
+            _isApproved = isApproved;
         }
 
         public override async Task ExecuteAsync(object parameter)
@@ -35,7 +37,7 @@ namespace RequestViewer.WPF.Commands
                         ActiveDirectoryCN = user.ActiveDirectoryCN,
                         UserName = user.Login,
                         Period = period,
-                        IsApproved = true,
+                        IsApproved = _isApproved,
                         Dates = openDays
                     };
 
