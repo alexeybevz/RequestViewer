@@ -53,6 +53,11 @@ namespace RequestViewer.WPF.ViewModels
             CancelCommand = new CloseModalCommand(modalNavigationStore);
         }
 
+        protected override void Dispose()
+        {
+            _periodsStore.PeriodsLoaded -= PeriodsStoreOnPeriodsLoaded;
+        }
+
         private void PeriodsStoreOnPeriodsLoaded()
         {
             var periods = _periodsStore.Periods.OrderByDescending(p => p.EndDate).ToList();

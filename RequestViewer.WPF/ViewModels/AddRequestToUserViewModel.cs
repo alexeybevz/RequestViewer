@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Input;
 using RequestViewer.WPF.Commands;
 using RequestViewer.WPF.Stores;
 
@@ -8,6 +7,7 @@ namespace RequestViewer.WPF.ViewModels
 {
     public class AddRequestToUserViewModel : ViewModelBase
     {
+        private readonly string _login;
         private readonly ModalNavigationStore _modalNavigationStore;
 
         public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
@@ -16,21 +16,23 @@ namespace RequestViewer.WPF.ViewModels
         public event Action OnExecuted;
         public event Action OnErrorOccurs;
 
-        public ICommand OpenAddRequestToUserCommand { get; }
+        public OpenAddRequestToUserCommand OpenAddRequestToUserCommand { get; }
 
         public AddRequestToUserViewModel(string login, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, PeriodsStore periodsStore, UsersStore usersStore)
         {
+            _login = login;
             _modalNavigationStore = modalNavigationStore;
 
-            var cmd = new OpenAddRequestToUserCommand(login, requestsStore, _modalNavigationStore, periodsStore, usersStore);
-            cmd.OnUserNotFound += () =>
-            {
-                MessageBox.Show($"Пользователь с логином '{login}' не найден. Создание заявки отменено.");
-                OnErrorOccurs?.Invoke();
-            };
-            OpenAddRequestToUserCommand = cmd;
+            OpenAddRequestToUserCommand = new OpenAddRequestToUserCommand(_login, requestsStore, _modalNavigationStore, periodsStore, usersStore);
+            OpenAddRequestToUserCommand.OnUserNotFound += OnUserNotFound;
 
             _modalNavigationStore.CurrentViewModelChanged += ModalNavigationStore_CurrentViewModelChanged;
+        }
+
+        private void OnUserNotFound()
+        {
+            MessageBox.Show($"Пользователь с логином '{_login}' не найден. Создание заявки отменено.");
+            OnErrorOccurs?.Invoke();
         }
 
         private void ModalNavigationStore_CurrentViewModelChanged()
@@ -44,6 +46,7 @@ namespace RequestViewer.WPF.ViewModels
 
         protected override void Dispose()
         {
+            OpenAddRequestToUserCommand.OnUserNotFound -= OnUserNotFound;
             _modalNavigationStore.CurrentViewModelChanged -= ModalNavigationStore_CurrentViewModelChanged;
 
             base.Dispose();

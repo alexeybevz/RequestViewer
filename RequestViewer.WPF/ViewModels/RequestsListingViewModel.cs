@@ -48,12 +48,16 @@ namespace RequestViewer.WPF.ViewModels
 
         protected override void Dispose()
         {
+            _selectedRequestStore.SelectedRequestChanged -= SelectedRequestStore_SelectedRequestChanged;
+
             _requestsStore.RequestsLoaded -= RequestsStore_RequestsLoaded;
             _requestsStore.RequestAdded -= RequestsStore_RequestAdded;
             _requestsStore.RequestUpdated -= RequestsStore_RequestUpdated;
             _requestsStore.RequestDeleted -= RequestsStore_RequestDeleted;
             _requestsStore.RequestApproved -= RequestsStore_RequestApproved;
             _requestsStore.RequestRejected -= RequestsStore_RequestRejected;
+
+            _requestsListingItemViewModels.CollectionChanged -= RequestsListingItemViewModels_CollectionChanged;
 
             base.Dispose();
         }

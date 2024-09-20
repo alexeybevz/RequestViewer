@@ -35,6 +35,11 @@ namespace RequestViewer.WPF.ViewModels
             _selectedRequestStore.SelectedRequestChanged += SelectedRequestStore_SelectedRequestChanged;
         }
 
+        protected override void Dispose()
+        {
+            _selectedRequestStore.SelectedRequestChanged -= SelectedRequestStore_SelectedRequestChanged;
+        }
+
         private void SelectedRequestStore_SelectedRequestChanged()
         {
             RefreshDayVMs();

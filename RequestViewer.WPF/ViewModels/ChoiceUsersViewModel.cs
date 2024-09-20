@@ -65,6 +65,11 @@ namespace RequestViewer.WPF.ViewModels
             CancelCommand = new CloseModalCommand(modalNavigationStore);
         }
 
+        protected override void Dispose()
+        {
+            _usersStore.UsersLoaded -= UsersStore_UsersLoaded;
+        }
+
         private void UsersStore_UsersLoaded()
         {
             var users = _usersStore?.Users == null

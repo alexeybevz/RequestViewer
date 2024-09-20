@@ -36,6 +36,11 @@ namespace RequestViewer.WPF.ViewModels
             RefreshDayVMs(request);
         }
 
+        protected override void Dispose()
+        {
+            CheckBoxViewModel.SelectedChanged -= CheckBoxViewModelOnSelectedChanged;
+        }
+
         private void CheckBoxViewModelOnSelectedChanged(bool isSelected)
         {
             var days = DayVMs.Where(d => !d.IsHeader && d.Day != null).ToList();
