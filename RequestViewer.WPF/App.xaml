@@ -99,5 +99,17 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <Style TargetType="TextBlock"
+               x:Key="ErrorMessage">
+            <Setter Property="Foreground"
+                    Value="Red" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
+            <Setter Property="TextWrapping"
+                    Value="Wrap" />
+            <Setter Property="TextAlignment"
+                    Value="Center" />
+        </Style>
     </Application.Resources>
 </Application>

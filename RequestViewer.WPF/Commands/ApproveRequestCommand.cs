@@ -20,6 +20,7 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsDetailsViewModel.ErrorMessage = null;
             _requestsDetailsViewModel.IsExecuting = true;
             _selectedRequestStore.SelectedRequest.IsApproved = true;
 
@@ -31,7 +32,8 @@ namespace RequestViewer.WPF.Commands
             }
             catch (Exception ex)
             {
-                throw;
+                _selectedRequestStore.SelectedRequest.IsApproved = false;
+                _requestsDetailsViewModel.ErrorMessage = "Произошла ошибка при согласовании заявки:\n" + ex.Message;
             }
             finally
             {

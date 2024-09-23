@@ -12,6 +12,7 @@ namespace RequestViewer.WPF.ViewModels
         private ObservableCollection<DayViewModel> _days;
         private readonly SelectedRequestStore _selectedRequestStore;
         private bool _isExecuting;
+        private string _errorMessage;
 
         public ObservableCollection<DayViewModel> DayVMs
         {
@@ -19,6 +20,18 @@ namespace RequestViewer.WPF.ViewModels
             set { _days = value; OnPropertyChanged(nameof(DayVMs)); }
         }
 
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
         public bool HasCommands => !_selectedRequestStore.SelectedRequest?.IsApproved ?? false;
         public bool HasSelectedRequest => _selectedRequestStore.SelectedRequest != null;
 

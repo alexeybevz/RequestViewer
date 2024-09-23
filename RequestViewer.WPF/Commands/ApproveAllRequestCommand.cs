@@ -19,6 +19,7 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsListingGroupItemViewModel.ErrorMessage = null;
             _requestsListingGroupItemViewModel.IsExecuting = true;
 
             await Task.Delay(500);
@@ -34,7 +35,7 @@ namespace RequestViewer.WPF.Commands
             }
             catch (Exception ex)
             {
-
+                _requestsListingGroupItemViewModel.ErrorMessage = "Произошла ошибка при массовом согласовании заявок:\n" + ex.Message;
             }
             finally
             {

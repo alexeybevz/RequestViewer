@@ -22,6 +22,8 @@
                 <scm:SortDescription PropertyName="SortProperty" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Border BorderBrush="{StaticResource BorderPrimary}"
             BorderThickness="1"
@@ -77,13 +79,16 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Column="0">
+                                        <StackPanel Grid.Column="0">
                                             <TextBlock Text="{Binding Name.GroupName}"
                                                        FontWeight="Bold"
                                                        FontSize="16"
                                                        Padding="10"
                                                        Margin="10 0 0 0" />
-                                        </Grid>
+                                            <TextBlock Style="{StaticResource ErrorMessage}"
+                                                       Text="{Binding Name.ErrorMessage}"
+                                                       Visibility="{Binding Name.HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        </StackPanel>
 
                                         <Grid Grid.Column="1">
                                             <Grid>

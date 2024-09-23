@@ -9,6 +9,7 @@ namespace RequestViewer.WPF.ViewModels
     {
         private readonly RequestsStore _requestsStore;
         private bool _isDeleting;
+        private string _errorMessage;
 
         public Request Request { get; private set; }
         public RequestsListingGroupItemViewModel Name { get; private set; }
@@ -25,6 +26,19 @@ namespace RequestViewer.WPF.ViewModels
                 OnPropertyChanged(nameof(IsDeleting));
             }
         }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
         public ICommand EditRequestCommand { get; }
         public ICommand DeleteRequestCommand { get; }

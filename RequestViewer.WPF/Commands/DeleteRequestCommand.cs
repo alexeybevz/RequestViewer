@@ -18,6 +18,7 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsListingItemViewModel.ErrorMessage = null;
             _requestsListingItemViewModel.IsDeleting = true;
 
             await Task.Delay(500);
@@ -28,7 +29,7 @@ namespace RequestViewer.WPF.Commands
             }
             catch (Exception ex)
             {
-                throw;
+                _requestsListingItemViewModel.ErrorMessage = "Произошла ошибка при удалении заявки:\n" + ex.Message;
             }
             finally
             {

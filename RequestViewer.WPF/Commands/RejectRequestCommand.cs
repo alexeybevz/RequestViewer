@@ -20,6 +20,7 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsDetailsViewModel.ErrorMessage = null;
             _requestsDetailsViewModel.IsExecuting = true;
 
             await Task.Delay(500);
@@ -30,7 +31,7 @@ namespace RequestViewer.WPF.Commands
             }
             catch (Exception ex)
             {
-                throw;
+                _requestsDetailsViewModel.ErrorMessage = "Произошла ошибка при отклонении заявки:\n" + ex.Message;
             }
             finally
             {

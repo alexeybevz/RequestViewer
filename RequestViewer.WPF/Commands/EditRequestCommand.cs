@@ -25,6 +25,7 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _editRequestViewModel.ErrorMessage = null;
             _editRequestViewModel.IsSubmitting = true;
 
             await Task.Delay(500);
@@ -57,7 +58,7 @@ namespace RequestViewer.WPF.Commands
             }
             catch (Exception ex)
             {
-                throw;
+                _editRequestViewModel.ErrorMessage = "Произошла ошибка при редактировании заявки:\n" + ex.Message;
             }
             finally
             {

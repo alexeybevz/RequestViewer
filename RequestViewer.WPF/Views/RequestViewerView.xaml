@@ -51,31 +51,68 @@
                 </Style>
             </Grid.Style>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility"
+                                Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasErrorMessage}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
 
-            <Grid Grid.Row="0">
-                <Button FontSize="16"
-                        Content="Открыть доступ"
-                        Style="{StaticResource ApproveButton}"
-                        HorizontalAlignment="Left"
-                        Command="{Binding OpenAddRequestCommand}" />
+                <TextBlock Style="{StaticResource ErrorMessage}"
+                           Text="{Binding ErrorMessage}"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center" />
             </Grid>
 
-            <Grid Grid.Row="1"
-                  Margin="0 20 0 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility"
+                                Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HasErrorMessage}"
+                                         Value="False">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
 
-                <components:RequestsListing Grid.Column="0"
-                                            DataContext="{Binding RequestsListingViewModel}" />
-                <components:RequestsDetails Grid.Column="1"
-                                            Margin="20 0 0 0"
-                                            DataContext="{Binding RequestsDetailsViewModel}" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Button FontSize="16"
+                            Content="Открыть доступ"
+                            Style="{StaticResource ApproveButton}"
+                            HorizontalAlignment="Left"
+                            Command="{Binding OpenAddRequestCommand}" />
+                </Grid>
+
+                <Grid Grid.Row="1"
+                      Margin="0 20 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <components:RequestsListing Grid.Column="0"
+                                                DataContext="{Binding RequestsListingViewModel}" />
+                    <components:RequestsDetails Grid.Column="1"
+                                                Margin="20 0 0 0"
+                                                DataContext="{Binding RequestsDetailsViewModel}" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

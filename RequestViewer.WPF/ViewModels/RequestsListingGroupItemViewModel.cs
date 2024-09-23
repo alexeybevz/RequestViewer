@@ -10,6 +10,7 @@ namespace RequestViewer.WPF.ViewModels
         private string _groupName;
         private bool _isApproved;
         private bool _isExecuting;
+        private string _errorMessage;
 
         public string GroupName
         {
@@ -40,6 +41,19 @@ namespace RequestViewer.WPF.ViewModels
                 OnPropertyChanged(nameof(IsExecuting));
             }
         }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
         
         public ICommand DeleteAllRequestCommand { get; }
         public ICommand ApproveAllRequestCommand { get; }

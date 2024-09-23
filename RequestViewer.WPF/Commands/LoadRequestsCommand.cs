@@ -1,4 +1,5 @@
-﻿using RequestViewer.WPF.Stores;
+﻿using System;
+using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;
 using System.Threading.Tasks;
 
@@ -17,14 +18,16 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestViewerViewModel.ErrorMessage = null;
             _requestViewerViewModel.IsLoading = true;
 
             try
             {
                 await _requestsStore.Load();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
+                _requestViewerViewModel.ErrorMessage = "Произошла ошибка при загрузке заявок:\n\n" + ex.Message;
             }
             finally
             {

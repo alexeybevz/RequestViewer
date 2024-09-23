@@ -7,6 +7,7 @@ namespace RequestViewer.WPF.ViewModels
     public class RequestViewerViewModel : ViewModelBase
     {
         private bool _isLoading;
+        private string _errorMessage;
 
         public bool IsLoading
         {
@@ -17,6 +18,19 @@ namespace RequestViewer.WPF.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
         public RequestsListingViewModel RequestsListingViewModel { get; }
         public RequestsDetailsViewModel RequestsDetailsViewModel { get; }

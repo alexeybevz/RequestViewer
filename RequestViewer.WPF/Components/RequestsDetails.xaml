@@ -53,6 +53,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0"
                   HorizontalAlignment="Center">
@@ -128,6 +129,11 @@
                                                           Margin="0 10 0 0" />
                 </StackPanel>
             </Grid>
+            <TextBlock Grid.Row="3"
+                       Margin="0 15 0 0"
+                       Style="{StaticResource ErrorMessage}"
+                       Text="{Binding ErrorMessage}"
+                       Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
     </Grid>
 </UserControl>

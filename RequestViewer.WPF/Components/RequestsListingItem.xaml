@@ -24,6 +24,10 @@
                 <StackPanel>
                     <TextBlock Text="{Binding ActiveDirectoryCN}"
                                TextWrapping="Wrap" />
+                    <TextBlock Style="{StaticResource ErrorMessage}"
+                               Text="{Binding ErrorMessage}"
+                               Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               FontSize="14"/>
                 </StackPanel>
 
                 <Grid Grid.Column="1">

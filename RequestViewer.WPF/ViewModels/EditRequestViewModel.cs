@@ -12,6 +12,7 @@ namespace RequestViewer.WPF.ViewModels
     {
         private ObservableCollection<DayViewModel> _days;
         private bool _isSubmitting;
+        private string _errorMessage;
 
         public ObservableCollection<DayViewModel> DayVMs
         {
@@ -30,6 +31,19 @@ namespace RequestViewer.WPF.ViewModels
                 OnPropertyChanged(nameof(IsSubmitting));
             }
         }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+                OnPropertyChanged(nameof(HasErrorMessage));
+            }
+        }
+
+        public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
