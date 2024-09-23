@@ -41,11 +41,17 @@ namespace RequestViewer.WPF.Stores
         {
             _requestsStore = requestsStore;
 
+            _requestsStore.RequestsLoaded += RequestsStore_RequestLoaded;
             _requestsStore.RequestAdded += RequestsStore_RequestAdded;
             _requestsStore.RequestUpdated += RequestsStore_RequestUpdated;
             _requestsStore.RequestDeleted += RequestsStore_RequestDeleted;
             _requestsStore.RequestApproved += RequestsStore_RequestApproved;
             _requestsStore.RequestRejected += RequestsStore_RequestRejected;
+        }
+
+        private void RequestsStore_RequestLoaded()
+        {
+            ClearSelectedRequest();
         }
 
         private void RequestsStore_RequestAdded(Request request)

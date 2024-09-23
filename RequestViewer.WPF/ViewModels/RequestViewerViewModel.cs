@@ -11,11 +11,11 @@ namespace RequestViewer.WPF.ViewModels
 
         public RequestViewerViewModel(RequestsStore requestsStore, SelectedRequestStore selectedRequestStore, ModalNavigationStore modalNavigationStore, UsersStore usersStore, PeriodsStore periodsStore)
         {
-            RequestsListingViewModel = new RequestsListingViewModel(selectedRequestStore, requestsStore, modalNavigationStore);
-            RequestsDetailsViewModel = new RequestsDetailsViewModel(selectedRequestStore, requestsStore);
-
             LoadRequestsCommand = new LoadRequestsCommand(this, requestsStore);
             OpenAddRequestCommand = new OpenAddRequestCommand(requestsStore, usersStore, modalNavigationStore, periodsStore);
+
+            RequestsListingViewModel = new RequestsListingViewModel(this, selectedRequestStore, requestsStore, modalNavigationStore);
+            RequestsDetailsViewModel = new RequestsDetailsViewModel(selectedRequestStore, requestsStore);
         }
 
         public ICommand LoadRequestsCommand { get; set; }

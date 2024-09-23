@@ -2,6 +2,7 @@
 using RequestViewer.WPF.Stores;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace RequestViewer.WPF.ViewModels
 {
@@ -13,6 +14,8 @@ namespace RequestViewer.WPF.ViewModels
         private ObservableCollection<RequestsListingItemViewModel> _requestsListingItemViewModels;
 
         public ObservableCollection<RequestsListingItemViewModel> RequestsListingItemViewModels => _requestsListingItemViewModels;
+
+        public ICommand LoadRequestsCommand { get; }
 
         public RequestsListingItemViewModel SelectedRequestsListingItemViewModel
         {
@@ -27,12 +30,14 @@ namespace RequestViewer.WPF.ViewModels
             }
         }
 
-        public RequestsListingViewModel(SelectedRequestStore selectedRequestStore, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
+        public RequestsListingViewModel(RequestViewerViewModel requestViewerView, SelectedRequestStore selectedRequestStore, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
         {
             _selectedRequestStore = selectedRequestStore;
             _requestsStore = requestsStore;
             _modalNavigationStore = modalNavigationStore;
             _requestsListingItemViewModels = new ObservableCollection<RequestsListingItemViewModel>();
+
+            LoadRequestsCommand = requestViewerView.LoadRequestsCommand;
 
             _selectedRequestStore.SelectedRequestChanged += SelectedRequestStore_SelectedRequestChanged;
 

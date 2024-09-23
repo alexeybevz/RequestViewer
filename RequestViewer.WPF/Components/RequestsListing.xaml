@@ -33,143 +33,173 @@
             <Border x:Name="border"
                     Background="White"
                     CornerRadius="5" />
-            <ListBox SelectionMode="Single"
-                     BorderThickness="0"
-                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                     ItemsSource="{Binding Source={StaticResource RequestsViewSource}}"
-                     SelectedItem="{Binding SelectedRequestsListingItemViewModel, Mode=TwoWay}">
-                <ListBox.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Border Background="#e6e6e6"
+                        BorderThickness="1"
+                        Padding="5"
+                        Margin="0 -1 0 0">
+                    <WrapPanel HorizontalAlignment="Center">
+                        <TextBlock Text="Список заявок"
+                                   FontSize="24"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   FontWeight="Bold" />
+                        <Button Height="20"
+                                Width="20"
+                                Margin="10 5 0 0"
+                                Cursor="Hand"
+                                Command="{Binding LoadRequestsCommand}">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="../Images/refresh.png"
+                                           ToolTip="Обновить данные" />
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </WrapPanel>
+                </Border>
+                <Border Background="Black"
+                        CornerRadius="5" />
+                <ListBox SelectionMode="Single"
+                         BorderThickness="0"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                         ItemsSource="{Binding Source={StaticResource RequestsViewSource}}"
+                         SelectedItem="{Binding SelectedRequestsListingItemViewModel, Mode=TwoWay}">
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Grid Grid.Column="0">
-                                        <TextBlock Text="{Binding Name.GroupName}"
-                                                   FontWeight="Bold"
-                                                   FontSize="16" Padding="10" Margin="10 0 0 0" />
-                                    </Grid>
+                                        <Grid Grid.Column="0">
+                                            <TextBlock Text="{Binding Name.GroupName}"
+                                                       FontWeight="Bold"
+                                                       FontSize="16"
+                                                       Padding="10"
+                                                       Margin="10 0 0 0" />
+                                        </Grid>
 
-                                    <Grid Grid.Column="1">
-                                        <dropdownMenuControl:DropdownMenu x:Name="dropdown"
-                                                                          Margin="10 0 15 0">
-                                            <Border Background="White"
-                                                    BorderBrush="Gray"
-                                                    BorderThickness="1">
-                                                <StackPanel MinWidth="125">
-                                                    <StackPanel.Resources>
-                                                        <Style TargetType="Button">
-                                                            <Setter Property="Background"
-                                                                    Value="#f0f0f0" />
-                                                            <Setter Property="Foreground"
-                                                                    Value="Black" />
-                                                            <Setter Property="HorizontalAlignment"
-                                                                    Value="Stretch" />
-                                                            <Setter Property="Padding"
-                                                                    Value="20 10" />
-                                                            <Setter Property="Cursor"
-                                                                    Value="Hand" />
+                                        <Grid Grid.Column="1">
+                                            <dropdownMenuControl:DropdownMenu x:Name="dropdown"
+                                                                              Margin="10 0 15 0">
+                                                <Border Background="White"
+                                                        BorderBrush="Gray"
+                                                        BorderThickness="1">
+                                                    <StackPanel MinWidth="125">
+                                                        <StackPanel.Resources>
+                                                            <Style TargetType="Button">
+                                                                <Setter Property="Background"
+                                                                        Value="#f0f0f0" />
+                                                                <Setter Property="Foreground"
+                                                                        Value="Black" />
+                                                                <Setter Property="HorizontalAlignment"
+                                                                        Value="Stretch" />
+                                                                <Setter Property="Padding"
+                                                                        Value="20 10" />
+                                                                <Setter Property="Cursor"
+                                                                        Value="Hand" />
 
-                                                            <Setter Property="Template">
-                                                                <Setter.Value>
-                                                                    <ControlTemplate TargetType="Button">
-                                                                        <Border Margin="{TemplateBinding Margin}"
-                                                                                Padding="{TemplateBinding Padding}"
-                                                                                Background="{TemplateBinding Background}">
-                                                                            <ContentPresenter />
-                                                                        </Border>
-                                                                    </ControlTemplate>
-                                                                </Setter.Value>
-                                                            </Setter>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="Button">
+                                                                            <Border Margin="{TemplateBinding Margin}"
+                                                                                    Padding="{TemplateBinding Padding}"
+                                                                                    Background="{TemplateBinding Background}">
+                                                                                <ContentPresenter />
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
 
-                                                            <Style.Triggers>
-                                                                <Trigger Property="IsMouseOver"
-                                                                         Value="True">
-                                                                    <Trigger.EnterActions>
-                                                                        <BeginStoryboard>
-                                                                            <Storyboard>
-                                                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                                                                To="#C7C7C7"
-                                                                                                Duration="0:0:0.1" />
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </Trigger.EnterActions>
-                                                                    <Trigger.ExitActions>
-                                                                        <BeginStoryboard>
-                                                                            <Storyboard>
-                                                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
-                                                                                                To="#f0f0f0"
-                                                                                                Duration="0:0:0.1" />
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </Trigger.ExitActions>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Resources>
-                                                    <Grid>
-                                                        <Grid.Style>
-                                                            <Style TargetType="Grid">
-                                                                <Setter Property="Visibility"
-                                                                        Value="Collapsed" />
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Name.IsApproved}"
-                                                                                 Value="True">
-                                                                        <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                    </DataTrigger>
+                                                                    <Trigger Property="IsMouseOver"
+                                                                             Value="True">
+                                                                        <Trigger.EnterActions>
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                                                                    To="#C7C7C7"
+                                                                                                    Duration="0:0:0.1" />
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </Trigger.EnterActions>
+                                                                        <Trigger.ExitActions>
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"
+                                                                                                    To="#f0f0f0"
+                                                                                                    Duration="0:0:0.1" />
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </Trigger.ExitActions>
+                                                                    </Trigger>
                                                                 </Style.Triggers>
                                                             </Style>
-                                                        </Grid.Style>
-                                                        <Button Content="Удалить все заявки"
-                                                                Command="{Binding Name.DeleteAllRequestCommand}" />
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.Style>
-                                                            <Style TargetType="Grid">
-                                                                <Setter Property="Visibility"
-                                                                        Value="Collapsed" />
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Name.IsApproved}"
-                                                                                 Value="False">
-                                                                        <Setter Property="Visibility"
-                                                                                Value="Visible" />
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Grid.Style>
-                                                        <StackPanel>
-                                                            <Button Content="Согласовать все заявки"
-                                                                    Command="{Binding Name.ApproveAllRequestCommand}" />
-                                                            <Button Content="Отклонить все заявки"
-                                                                    Command="{Binding Name.RejectAllRequestCommand}" />
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Border>
-                                        </dropdownMenuControl:DropdownMenu>
+                                                        </StackPanel.Resources>
+                                                        <Grid>
+                                                            <Grid.Style>
+                                                                <Style TargetType="Grid">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Name.IsApproved}"
+                                                                                     Value="True">
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Grid.Style>
+                                                            <Button Content="Удалить все заявки"
+                                                                    Command="{Binding Name.DeleteAllRequestCommand}" />
+                                                        </Grid>
+                                                        <Grid>
+                                                            <Grid.Style>
+                                                                <Style TargetType="Grid">
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Name.IsApproved}"
+                                                                                     Value="False">
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Grid.Style>
+                                                            <StackPanel>
+                                                                <Button Content="Согласовать все заявки"
+                                                                        Command="{Binding Name.ApproveAllRequestCommand}" />
+                                                                <Button Content="Отклонить все заявки"
+                                                                        Command="{Binding Name.RejectAllRequestCommand}" />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </Border>
+                                            </dropdownMenuControl:DropdownMenu>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListBox.GroupStyle>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <local:RequestsListingItem/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="HorizontalContentAlignment"
-                                Value="Stretch" />
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <local:RequestsListingItem />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Stretch" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

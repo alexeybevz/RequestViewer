@@ -51,6 +51,7 @@ namespace RequestViewer.WPF.ViewModels
         private void RefreshDayVMs()
         {
             DayVMs.Clear();
+            OnPropertyChanged(nameof(DayVMs));
 
             var request = _selectedRequestStore.SelectedRequest;
 

@@ -68,6 +68,7 @@ namespace RequestViewer.WPF.ViewModels
         private void RefreshDayVMs(Period period)
         {
             DayVMs.Clear();
+            OnPropertyChanged(nameof(DayVMs));
 
             var vms = DayViewModelListCreator.Create(period, new List<Day>(), true, true).ToList();
             vms.ForEach(vm =>
