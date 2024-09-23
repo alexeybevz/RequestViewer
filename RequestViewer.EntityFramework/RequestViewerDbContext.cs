@@ -11,5 +11,11 @@ namespace RequestViewer.EntityFramework
         public DbSet<RequestDayDto> RequestDays { get; set; }
         public DbSet<PeriodDto> Periods { get; set; }
         public DbSet<UserDto> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RequestDto>()
+                .HasIndex(p => new { p.UserName, p.PeriodId }).IsUnique();
+        }
     }
 }

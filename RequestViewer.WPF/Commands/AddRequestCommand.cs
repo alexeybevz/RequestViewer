@@ -54,6 +54,12 @@ namespace RequestViewer.WPF.Commands
             catch (Exception ex)
             {
                 _addRequestViewModel.ErrorMessage = "Произошла ошибка при создании заявки:\n" + ex.Message;
+
+                if (ex.InnerException?.Message.Contains(
+                    "UNIQUE constraint failed: Requests.UserName, Requests.PeriodId") ?? false)
+                {
+                    _addRequestViewModel.ErrorMessage = "Произошла ошибка при создании заявки:\n" + "У пользователя уже существует заявка в данном периоде";
+                }
             }
             finally
             {
