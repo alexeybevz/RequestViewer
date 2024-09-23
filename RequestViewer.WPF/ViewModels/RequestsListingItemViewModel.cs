@@ -8,12 +8,23 @@ namespace RequestViewer.WPF.ViewModels
     public class RequestsListingItemViewModel : ViewModelBase
     {
         private readonly RequestsStore _requestsStore;
+        private bool _isDeleting;
 
         public Request Request { get; private set; }
         public RequestsListingGroupItemViewModel Name { get; private set; }
         public string SortProperty { get; private set; }
         public string ActiveDirectoryCN => Request.ActiveDirectoryCN;
         public bool HasCommands => Request.IsApproved;
+
+        public bool IsDeleting
+        {
+            get => _isDeleting;
+            set
+            {
+                _isDeleting = value;
+                OnPropertyChanged(nameof(IsDeleting));
+            }
+        }
 
         public ICommand EditRequestCommand { get; }
         public ICommand DeleteRequestCommand { get; }

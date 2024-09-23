@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RequestViewer.WPF.Components"
+             xmlns:loadingSpinnerControl="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -33,7 +34,7 @@
                        TextAlignment="Center"
                        MinWidth="100" />
         </Grid>
-    
+
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -110,15 +111,22 @@
             <Grid Grid.Row="2"
                   Margin="0 20 0 0"
                   Visibility="{Binding HasCommands, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <WrapPanel HorizontalAlignment="Center">
-                    <Button Content="Согласовать"
-                            Command="{Binding ApproveRequestCommand}"
-                            Style="{StaticResource ApproveButton}" />
-                    <Button Content="Отклонить"
-                            Command="{Binding RejectRequestCommand}"
-                            Style="{StaticResource RejectButton}"
-                            Margin="5 0 0 0" />
-                </WrapPanel>
+                <StackPanel HorizontalAlignment="Center">
+                    <WrapPanel>
+                        <Button Content="Согласовать"
+                                Command="{Binding ApproveRequestCommand}"
+                                Style="{StaticResource ApproveButton}" />
+                        <Button Content="Отклонить"
+                                Command="{Binding RejectRequestCommand}"
+                                Style="{StaticResource RejectButton}"
+                                Margin="5 0 0 0"
+                                Cursor="Hand" />
+                    </WrapPanel>
+                    <loadingSpinnerControl:LoadingSpinner IsLoading="{Binding IsExecuting}"
+                                                          Diameter="25"
+                                                          Thickness="2"
+                                                          Margin="0 10 0 0" />
+                </StackPanel>
             </Grid>
         </Grid>
     </Grid>

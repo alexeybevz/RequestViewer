@@ -11,6 +11,7 @@ namespace RequestViewer.WPF.ViewModels
     public class EditRequestViewModel : ViewModelBase
     {
         private ObservableCollection<DayViewModel> _days;
+        private bool _isSubmitting;
 
         public ObservableCollection<DayViewModel> DayVMs
         {
@@ -19,6 +20,16 @@ namespace RequestViewer.WPF.ViewModels
         }
 
         public CheckBoxViewModel CheckBoxViewModel { get; }
+
+        public bool IsSubmitting
+        {
+            get => _isSubmitting;
+            set
+            {
+                _isSubmitting = value;
+                OnPropertyChanged(nameof(IsSubmitting));
+            }
+        }
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }

@@ -18,6 +18,10 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsListingItemViewModel.IsDeleting = true;
+
+            await Task.Delay(500);
+
             try
             {
                 await _requestsStore.Delete(_requestsListingItemViewModel.Request.Id);
@@ -28,7 +32,7 @@ namespace RequestViewer.WPF.Commands
             }
             finally
             {
-
+                _requestsListingItemViewModel.IsDeleting = false;
             }
         }
     }

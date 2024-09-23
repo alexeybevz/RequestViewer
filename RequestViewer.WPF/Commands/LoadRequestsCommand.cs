@@ -17,6 +17,8 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestViewerViewModel.IsLoading = true;
+
             try
             {
                 await _requestsStore.Load();
@@ -26,6 +28,7 @@ namespace RequestViewer.WPF.Commands
             }
             finally
             {
+                _requestViewerViewModel.IsLoading = false;
             }
         }
     }

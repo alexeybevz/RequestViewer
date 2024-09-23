@@ -6,6 +6,18 @@ namespace RequestViewer.WPF.ViewModels
 {
     public class RequestViewerViewModel : ViewModelBase
     {
+        private bool _isLoading;
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
         public RequestsListingViewModel RequestsListingViewModel { get; }
         public RequestsDetailsViewModel RequestsDetailsViewModel { get; }
 

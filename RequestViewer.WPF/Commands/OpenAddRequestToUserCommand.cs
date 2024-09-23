@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;

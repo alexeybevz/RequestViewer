@@ -11,6 +11,7 @@ namespace RequestViewer.WPF.ViewModels
     {
         private ObservableCollection<DayViewModel> _days;
         private readonly SelectedRequestStore _selectedRequestStore;
+        private bool _isExecuting;
 
         public ObservableCollection<DayViewModel> DayVMs
         {
@@ -20,6 +21,16 @@ namespace RequestViewer.WPF.ViewModels
 
         public bool HasCommands => !_selectedRequestStore.SelectedRequest?.IsApproved ?? false;
         public bool HasSelectedRequest => _selectedRequestStore.SelectedRequest != null;
+
+        public bool IsExecuting
+        {
+            get => _isExecuting;
+            set
+            {
+                _isExecuting = value;
+                OnPropertyChanged(nameof(IsExecuting));
+            }
+        }
 
         public ICommand ApproveRequestCommand { get; }
         public ICommand RejectRequestCommand { get; }

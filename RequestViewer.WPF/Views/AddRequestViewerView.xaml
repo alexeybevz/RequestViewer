@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RequestViewer.WPF.Views"
              xmlns:components="clr-namespace:RequestViewer.WPF.Components"
+             xmlns:loadingSpinnerControl="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -75,16 +76,22 @@
         </Grid>
         <Grid Grid.Row="3"
               Margin="0 20 0 0">
-            <WrapPanel HorizontalAlignment="Center">
-                <Button Content="Сохранить"
-                        Command="{Binding SubmitCommand}"
-                        IsEnabled="{Binding CanSubmit}"
-                        Style="{StaticResource ApproveButton}" />
-                <Button Content="Отменить"
-                        Command="{Binding CancelCommand}"
-                        Style="{StaticResource RejectButton}"
-                        Margin="5 0 0 0" />
-            </WrapPanel>
+            <StackPanel HorizontalAlignment="Center">
+                <WrapPanel>
+                    <Button Content="Сохранить"
+                            Command="{Binding SubmitCommand}"
+                            IsEnabled="{Binding CanSubmit}"
+                            Style="{StaticResource ApproveButton}" />
+                    <Button Content="Отменить"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource RejectButton}"
+                            Margin="5 0 0 0" />
+                </WrapPanel>
+                <loadingSpinnerControl:LoadingSpinner IsLoading="{Binding IsSubmitting}"
+                                                      Diameter="25"
+                                                      Thickness="2"
+                                                      Margin="0 10 0 0" />
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

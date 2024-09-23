@@ -20,6 +20,8 @@ namespace RequestViewer.EntityFramework.Queries
 
         public async Task<IEnumerable<Request>> Execute()
         {
+            await Task.Delay(500);
+
             IEnumerable<User> users = await _getAllUsersQuery.Execute();
 
             using (var context = _contextFactory.Create())

@@ -9,6 +9,7 @@ namespace RequestViewer.WPF.ViewModels
     {
         private string _groupName;
         private bool _isApproved;
+        private bool _isExecuting;
 
         public string GroupName
         {
@@ -30,6 +31,16 @@ namespace RequestViewer.WPF.ViewModels
             }
         }
 
+        public bool IsExecuting
+        {
+            get => _isExecuting;
+            set
+            {
+                _isExecuting = value;
+                OnPropertyChanged(nameof(IsExecuting));
+            }
+        }
+        
         public ICommand DeleteAllRequestCommand { get; }
         public ICommand ApproveAllRequestCommand { get; }
         public ICommand RejectAllRequestCommand { get; }

@@ -15,6 +15,7 @@ namespace RequestViewer.WPF.ViewModels
         private readonly ModalNavigationStore _modalNavigationStore;
         private readonly IEnumerable<User> _users;
         private readonly Period _period;
+        private bool _isSubmitting;
 
         public IEnumerable<User> Users => _users;
         public Period Period => _period;
@@ -29,6 +30,16 @@ namespace RequestViewer.WPF.ViewModels
 
         public CheckBoxViewModel CheckBoxViewModel { get; }
         public bool CanSubmit => DayVMs.Count(x => x.IsOpen) > 0;
+
+        public bool IsSubmitting
+        {
+            get => _isSubmitting;
+            set
+            {
+                _isSubmitting = value;
+                OnPropertyChanged(nameof(IsSubmitting));
+            }
+        }
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }

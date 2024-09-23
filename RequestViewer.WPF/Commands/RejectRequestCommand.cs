@@ -20,6 +20,10 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsDetailsViewModel.IsExecuting = true;
+
+            await Task.Delay(500);
+
             try
             {
                 await _requestsStore.Reject(_selectedRequestStore.SelectedRequest);
@@ -30,7 +34,7 @@ namespace RequestViewer.WPF.Commands
             }
             finally
             {
-
+                _requestsDetailsViewModel.IsExecuting = false;
             }
         }
     }

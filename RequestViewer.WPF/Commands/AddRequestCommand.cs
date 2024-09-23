@@ -24,6 +24,10 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _addRequestViewModel.IsSubmitting = true;
+
+            await Task.Delay(500);
+
             var openDays = _addRequestViewModel.DayVMs.Where(vm => vm.IsOpen).Select(d => new Day { Date = DateTime.Parse(d.Day) }).ToList();
             var period = _addRequestViewModel.Period;
             var users = _addRequestViewModel.Users;
@@ -52,7 +56,7 @@ namespace RequestViewer.WPF.Commands
             }
             finally
             {
-
+                _addRequestViewModel.IsSubmitting = false;
             }
         }
     }

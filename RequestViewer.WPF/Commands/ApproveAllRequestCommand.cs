@@ -19,6 +19,10 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object parameter)
         {
+            _requestsListingGroupItemViewModel.IsExecuting = true;
+
+            await Task.Delay(500);
+
             try
             {
                 var requests = _requestsStore.Requests.Where(x => x.Name == _requestsListingGroupItemViewModel.GroupName).ToList();
@@ -34,7 +38,7 @@ namespace RequestViewer.WPF.Commands
             }
             finally
             {
-
+                _requestsListingGroupItemViewModel.IsExecuting = false;
             }
         }
     }
