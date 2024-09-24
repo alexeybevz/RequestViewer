@@ -3,6 +3,7 @@ using RequestViewer.Domain.Models;
 using RequestViewer.Domain.Queries;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RequestViewer.WPF.Stores
@@ -56,11 +57,50 @@ namespace RequestViewer.WPF.Stores
 
         public async Task Add(Request request)
         {
-            await _createRequestCommand.Execute(request);
+            var requests = await _getAllRequestsQuery.Execute();
 
-            _requests.Add(request);
+            var dbReq = requests.FirstOrDefault(r =>
+                r.UserName == request.UserName && r.Period.Id == request.Period.Id && r.IsApproved == request.IsApproved);
 
-            RequestAdded?.Invoke(request);
+            if (dbReq == null)
+            {
+                await _createRequestCommand.Execute(request);
+
+                _requests.Add(request);
+
+                RequestAdded?.Invoke(request);
+
+                return;
+            }
+
+            if (request.IsApproved)
+            {
+                var vmReq = _requests.FirstOrDefault(r => r.Id == dbReq.Id);
+                if (vmReq != null)
+                {
+                    foreach (var day in request.Dates)
+                    {
+                        if (vmReq.Dates.ToList().Exists(r => r.Date == day.Date))
+                            continue;
+
+                        vmReq.Dates.Add(day);
+                    }
+
+                    await Update(vmReq);
+                }
+            }
+            else
+            {
+                foreach (var day in request.Dates)
+                {
+                    if (dbReq.Dates.ToList().Exists(r => r.Date == day.Date))
+                        continue;
+
+                    dbReq.Dates.Add(day);
+                }
+
+                await Update(dbReq);
+            }
         }
 
         public async Task Update(Request request)
@@ -91,19 +131,45 @@ namespace RequestViewer.WPF.Stores
 
         public async Task Approve(Request request)
         {
-            await _approveRequestCommand.Execute(request);
+            var requests = await _getAllRequestsQuery.Execute();
 
-            int currentIndex = _requests.FindIndex(x => x.Id == request.Id);
-            if (currentIndex != -1)
+            var dbReq = requests.FirstOrDefault(r =>
+                r.UserName == request.UserName && r.Period.Id == request.Period.Id && r.IsApproved);
+
+            if (dbReq == null)
             {
-                _requests[currentIndex] = request;
-            }
-            else
-            {
-                _requests.Add(request);
+                await _approveRequestCommand.Execute(request);
+
+                int currentIndex = _requests.FindIndex(x => x.Id == request.Id);
+                if (currentIndex != -1)
+                {
+                    _requests[currentIndex] = request;
+                }
+                else
+                {
+                    _requests.Add(request);
+                }
+
+                RequestApproved?.Invoke(request);
+
+                return;
             }
 
-            RequestApproved?.Invoke(request);
+            var vmReq = _requests.FirstOrDefault(r => r.Id == dbReq.Id);
+            if (vmReq != null)
+            {
+                foreach (var day in request.Dates)
+                {
+                    if (vmReq.Dates.ToList().Exists(r => r.Date == day.Date))
+                        continue;
+
+                    vmReq.Dates.Add(day);
+                }
+
+                await Reject(request);
+
+                await Update(vmReq);
+            }
         }
 
         public async Task Reject(Request request)
