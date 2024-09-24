@@ -74,9 +74,6 @@ namespace RequestViewer.EntityFramework.Migrations
 
                     b.HasIndex("PeriodId");
 
-                    b.HasIndex("UserName", "PeriodId")
-                        .IsUnique();
-
                     b.ToTable("Requests");
                 });
 
