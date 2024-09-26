@@ -28,6 +28,10 @@
                       IsReadOnly="True"
                       SelectionMode="Single"
                       ColumnWidth="Auto">
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick"
+                                  Command="{Binding SubmitCommand}" />
+                </DataGrid.InputBindings>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Начало"
                                         Binding="{Binding StartDate, StringFormat=\{0:dd.MM.yyyy\}}" />

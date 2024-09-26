@@ -14,6 +14,9 @@ namespace RequestViewer.WPF.Commands
 
         public override async Task ExecuteAsync(object? parameter)
         {
+            if (_choicePeriodViewModel.SelectedPeriod == null)
+                return;
+
             _choicePeriodViewModel.RaisePeriodSelectedEvent();
         }
     }
