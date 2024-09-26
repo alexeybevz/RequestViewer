@@ -13,7 +13,7 @@ namespace RequestViewer.WPF.Commands
 
         public override void Execute(object? parameter)
         {
-            _modalNavigationStore.Close();
+            _modalNavigationStore.Close(true);
         }
     }
 }

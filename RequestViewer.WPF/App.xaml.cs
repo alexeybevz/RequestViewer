@@ -83,9 +83,11 @@ namespace RequestViewer.WPF
                     MainWindow.Close();
                 };
 
-                vm.OnExecuted += () =>
+                vm.OnExecuted += (bool isExecuted) =>
                 {
-                    MessageBox.Show("Заявка на открытие доступа отправлена и будет рассмотрена в течение дня.");
+                    if (isExecuted)
+                        MessageBox.Show("Заявка на открытие доступа отправлена и будет рассмотрена в течение дня.");
+
                     MainWindow.Close();
                 };
                 

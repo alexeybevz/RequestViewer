@@ -20,13 +20,23 @@ namespace RequestViewer.WPF.Stores
             }
         }
 
-        internal void Close()
+        internal void Close(bool isCancel = false)
         {
             CurrentViewModel = null;
+
+            if (isCancel)
+            {
+                IsCancelClosed?.Invoke();
+                return;
+            }
+
+            IsSubmitClosed?.Invoke();
         }
 
         public bool IsOpen => CurrentViewModel != null;
 
         public event Action CurrentViewModelChanged;
+        public event Action IsSubmitClosed;
+        public event Action IsCancelClosed;
     }
 }
