@@ -61,10 +61,7 @@ namespace RequestViewer.WPF.Stores
 
         private void RequestsStore_RequestUpdated(Request request)
         {
-            if (request.Id == SelectedRequest?.Id)
-            {
-                SelectedRequest = request;
-            }
+            SelectedRequest = request;
         }
 
         private void RequestsStore_RequestDeleted(int id)
