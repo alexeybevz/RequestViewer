@@ -52,7 +52,10 @@ namespace RequestViewer.WPF.Commands
 
             try
             {
-                await _requestsStore.Update(request);
+                if (request.Dates.Any())
+                    await _requestsStore.Update(request);
+                else
+                    await _requestsStore.Delete(request.Id);
 
                 _modalNavigationStore.Close();
             }
