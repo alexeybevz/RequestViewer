@@ -63,51 +63,7 @@
             <Grid Grid.Row="1"
                   Width="Auto"
                   Margin="0 20 0 0">
-                <ListBox ItemsSource="{Binding DayVMs}"
-                         BorderThickness="0"
-                         ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"
-                                       IsItemsHost="True"
-                                       Width="700" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <Border Name="Border"
-                                                Padding="3"
-                                                SnapsToDevicePixels="true">
-                                            <ContentPresenter />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver"
-                                                     Value="true">
-                                                <Setter TargetName="Border"
-                                                        Property="Background"
-                                                        Value="Transparent" />
-                                            </Trigger>
-                                            <Trigger Property="IsSelected"
-                                                     Value="true">
-                                                <Setter TargetName="Border"
-                                                        Property="Background"
-                                                        Value="Transparent" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <local:Day />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <local:DayListing />
             </Grid>
             <Grid Grid.Row="2"
                   Margin="0 20 0 0"
@@ -120,8 +76,7 @@
                         <Button Content="Отклонить"
                                 Command="{Binding RejectRequestCommand}"
                                 Style="{StaticResource RejectButton}"
-                                Margin="5 0 0 0"
-                                Cursor="Hand" />
+                                Margin="5 0 0 0" />
                     </WrapPanel>
                     <loadingSpinnerControl:LoadingSpinner IsLoading="{Binding IsExecuting}"
                                                           Diameter="25"

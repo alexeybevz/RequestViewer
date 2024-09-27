@@ -22,6 +22,8 @@ namespace RequestViewer.WPF.ViewModels
 
         public CheckBoxViewModel CheckBoxViewModel { get; }
 
+        public bool CanSubmit => true;
+
         public bool IsSubmitting
         {
             get => _isSubmitting;
