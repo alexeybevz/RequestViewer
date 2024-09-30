@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RequestViewer.Domain.Commands;
-using RequestViewer.Domain.Queries;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using RequestViewer.EntityFramework;
-using RequestViewer.EntityFramework.Commands;
-using RequestViewer.EntityFramework.Queries;
 using RequestViewer.WPF.Stores;
 using RequestViewer.WPF.ViewModels;
 using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using RequestViewer.WPF.HostBuilders;
 
 namespace RequestViewer.WPF
 {
@@ -15,49 +15,27 @@ namespace RequestViewer.WPF
     /// </summary>
     public partial class App : Application
     {
-        private readonly SelectedRequestStore _selectedRequestStore;
-        private readonly RequestsStore _requestsStore;
-        private readonly ModalNavigationStore _modalNavigationStore;
-        private readonly UsersStore _usersStore;
-        private readonly PeriodsStore _periodsStore;
-        private readonly RequestViewerDbContextFactory _requestViewerDbContextFactory;
-
-        private readonly IGetAllRequestsQuery _getAllRequestsQuery;
-        private readonly ICreateRequestCommand _createRequestCommand;
-        private readonly IUpdateRequestCommand _updateRequestCommand;
-        private readonly IDeleteRequestCommand _deleteRequestCommand;
-        private readonly IApproveRequestCommand _approveRequestCommand;
-        private readonly IRejectRequestCommand _rejectRequestCommand;
+        private readonly IHost _host;
 
         public App()
         {
-            string connectionString = "Data Source=RequestViewer.db";
-
-            _requestViewerDbContextFactory = new RequestViewerDbContextFactory(new DbContextOptionsBuilder().UseSqlite(connectionString).Options);
-
-            _getAllRequestsQuery = new GetAllRequestsQuery(_requestViewerDbContextFactory, new GetAllUsersQuery(_requestViewerDbContextFactory));
-            _createRequestCommand = new CreateRequestCommand(_requestViewerDbContextFactory);
-            _updateRequestCommand = new UpdateRequestCommand(_requestViewerDbContextFactory);
-            _deleteRequestCommand = new DeleteRequestCommand(_requestViewerDbContextFactory);
-            _approveRequestCommand = new ApproveRequestCommand(_requestViewerDbContextFactory);
-            _rejectRequestCommand = new RejectRequestCommand(_requestViewerDbContextFactory);
-
-            _requestsStore = new RequestsStore(
-                _getAllRequestsQuery,
-                _createRequestCommand,
-                _updateRequestCommand,
-                _deleteRequestCommand,
-                _approveRequestCommand,
-                _rejectRequestCommand);
-            _selectedRequestStore = new SelectedRequestStore(_requestsStore);
-            _modalNavigationStore = new ModalNavigationStore();
-            _usersStore = new UsersStore(new GetAllUsersQuery(_requestViewerDbContextFactory));
-            _periodsStore = new PeriodsStore(new GetAllPeriodsQuery(_requestViewerDbContextFactory));
+            _host = Host
+                .CreateDefaultBuilder()
+                .AddDbContext()
+                .ConfigureServices((context, services) =>
+                {
+                    services.AddTransient<RequestViewerViewModel>(CreateRequestViewerViewModel);
+                    services.AddSingleton<MainViewModel>();
+                })
+                .Build();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            using (RequestViewerDbContext context = _requestViewerDbContextFactory.Create())
+            _host.Start();
+
+            var requestViewerDbContextFactory = _host.Services.GetRequiredService<RequestViewerDbContextFactory>();
+            using (RequestViewerDbContext context = requestViewerDbContextFactory.Create())
             {
                 context.Database.Migrate();
             }
@@ -73,10 +51,14 @@ namespace RequestViewer.WPF
 
             if (key == "-createRequest")
             {
-                var vm = new AddRequestToUserViewModel(login, _requestsStore, _modalNavigationStore, _periodsStore, _usersStore);
+                var vm = new AddRequestToUserViewModel(
+                    login,
+                    _host.Services.GetRequiredService<RequestsStore>(),
+                    _host.Services.GetRequiredService<ModalNavigationStore>(),
+                    _host.Services.GetRequiredService<PeriodsStore>(),
+                    _host.Services.GetRequiredService<UsersStore>());
 
-                MainWindow = new AddRequestToUserWindow();
-                MainWindow.DataContext = vm;
+                MainWindow = new AddRequestToUserWindow { DataContext = vm };
 
                 vm.OnErrorOccurs += () =>
                 {
@@ -95,16 +77,32 @@ namespace RequestViewer.WPF
                 {
                     vm.OpenAddRequestToUserCommand?.Execute(null);
                 };
-                MainWindow.Show();
             }
             else
             {
-                MainWindow = new MainWindow();
-                MainWindow.DataContext = new MainViewModel(_selectedRequestStore, _requestsStore, _modalNavigationStore, _usersStore, _periodsStore);
-                MainWindow.Show();
+                MainWindow = new MainWindow() { DataContext = _host.Services.GetRequiredService<MainViewModel>() };
             }
 
+            MainWindow.Show();
+
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            _host.StopAsync();
+            _host.Dispose();
+        }
+
+        private RequestViewerViewModel CreateRequestViewerViewModel(IServiceProvider services)
+        {
+            return RequestViewerViewModel.LoadViewModel(
+                services.GetRequiredService<RequestsStore>(),
+                services.GetRequiredService<SelectedRequestStore>(),
+                services.GetRequiredService<ModalNavigationStore>(),
+                services.GetRequiredService<UsersStore>(),
+                services.GetRequiredService<PeriodsStore>()
+            );
         }
     }
 }
