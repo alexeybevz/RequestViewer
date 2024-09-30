@@ -11,7 +11,7 @@ namespace RequestViewer.WPF.ViewModels
         private readonly SelectedRequestStore _selectedRequestStore;
         private readonly RequestsStore _requestsStore;
         private readonly ModalNavigationStore _modalNavigationStore;
-        private ObservableCollection<RequestsListingItemViewModel> _requestsListingItemViewModels;
+        private readonly ObservableCollection<RequestsListingItemViewModel> _requestsListingItemViewModels;
 
         public ObservableCollection<RequestsListingItemViewModel> RequestsListingItemViewModels => _requestsListingItemViewModels;
 

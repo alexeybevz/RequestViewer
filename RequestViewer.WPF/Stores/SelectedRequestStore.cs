@@ -11,10 +11,7 @@ namespace RequestViewer.WPF.Stores
 
         public Request SelectedRequest
         {
-            get
-            {
-                return _selectedRequest;
-            }
+            get => _selectedRequest;
             set
             {
                 if (!Equals(_selectedRequest, value))

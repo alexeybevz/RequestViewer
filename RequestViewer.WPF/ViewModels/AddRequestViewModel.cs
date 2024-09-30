@@ -11,15 +11,12 @@ namespace RequestViewer.WPF.ViewModels
 {
     public class AddRequestViewModel : ViewModelBase
     {
-        private readonly RequestsStore _requestsStore;
-        private readonly ModalNavigationStore _modalNavigationStore;
-        private readonly IEnumerable<User> _users;
-        private readonly Period _period;
         private bool _isSubmitting;
         private string _errorMessage;
 
-        public IEnumerable<User> Users => _users;
-        public Period Period => _period;
+        public IEnumerable<User> Users { get; }
+
+        public Period Period { get; }
 
         private ObservableCollection<DayViewModel> _days;
 
@@ -60,10 +57,8 @@ namespace RequestViewer.WPF.ViewModels
 
         public AddRequestViewModel(RequestsStore requestsStore, ModalNavigationStore modalNavigationStore, IEnumerable<User> users, Period period, bool isApproved)
         {
-            _requestsStore = requestsStore;
-            _modalNavigationStore = modalNavigationStore;
-            _users = users;
-            _period = period;
+            Users = users;
+            Period = period;
             DayVMs = new ObservableCollection<DayViewModel>();
 
             CheckBoxViewModel = new CheckBoxViewModel("Выбрать все дни");

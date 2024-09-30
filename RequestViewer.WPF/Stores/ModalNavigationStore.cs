@@ -9,10 +9,7 @@ namespace RequestViewer.WPF.Stores
 
         public ViewModelBase CurrentViewModel
         {
-            get
-            {
-                return _currentViewModel;
-            }
+            get => _currentViewModel;
             set
             {
                 _currentViewModel = value;

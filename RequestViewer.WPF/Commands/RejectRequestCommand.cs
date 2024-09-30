@@ -7,9 +7,9 @@ namespace RequestViewer.WPF.Commands
 {
     public class RejectRequestCommand : AsyncCommandBase
     {
-        private RequestsDetailsViewModel _requestsDetailsViewModel;
-        private RequestsStore _requestsStore;
-        private SelectedRequestStore _selectedRequestStore;
+        private readonly RequestsDetailsViewModel _requestsDetailsViewModel;
+        private readonly RequestsStore _requestsStore;
+        private readonly SelectedRequestStore _selectedRequestStore;
 
         public RejectRequestCommand(RequestsDetailsViewModel requestsDetailsViewModel, RequestsStore requestsStore, SelectedRequestStore selectedRequestStore)
         {

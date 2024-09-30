@@ -5,9 +5,9 @@ namespace RequestViewer.WPF.Commands
 {
     public class OpenEditRequestCommand : CommandBase
     {
-        private RequestsListingItemViewModel _requestsListingItemViewModel;
-        private RequestsStore _requestsStore;
-        private ModalNavigationStore _modalNavigationStore;
+        private readonly RequestsListingItemViewModel _requestsListingItemViewModel;
+        private readonly RequestsStore _requestsStore;
+        private readonly ModalNavigationStore _modalNavigationStore;
 
         public OpenEditRequestCommand(RequestsListingItemViewModel requestsListingItemViewModel, RequestsStore requestsStore, ModalNavigationStore modalNavigationStore)
         {

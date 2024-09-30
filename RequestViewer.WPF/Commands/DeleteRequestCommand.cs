@@ -7,8 +7,8 @@ namespace RequestViewer.WPF.Commands
 {
     public class DeleteRequestCommand : AsyncCommandBase
     {
-        private RequestsListingItemViewModel _requestsListingItemViewModel;
-        private RequestsStore _requestsStore;
+        private readonly RequestsListingItemViewModel _requestsListingItemViewModel;
+        private readonly RequestsStore _requestsStore;
 
         public DeleteRequestCommand(RequestsListingItemViewModel requestsListingItemViewModel, RequestsStore requestsStore)
         {

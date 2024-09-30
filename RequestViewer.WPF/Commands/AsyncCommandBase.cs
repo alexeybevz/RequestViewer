@@ -8,10 +8,7 @@ namespace RequestViewer.WPF.Commands
         private bool _isExecuting;
         public bool IsExecuting
         {
-            get
-            {
-                return _isExecuting;
-            }
+            get => _isExecuting;
             set
             {
                 _isExecuting = value;
