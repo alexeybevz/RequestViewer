@@ -86,8 +86,11 @@ namespace RequestViewer.WPF.ViewModels
             if (request == null)
                 return;
 
-            var vms = DayViewModelListCreator.Create(request.Period, request.Dates, request.IsApproved, true).ToList();
-            vms.ForEach(vm => DayVMs.Add(vm));
+            var vms = DayModelListCreator.DayModelsToDayViewModels(
+                DayModelListCreator.Create(request.Period, request.Dates, request.IsApproved, true).ToList());
+
+            foreach (var vm in vms)
+                DayVMs.Add(vm);
         }
     }
 }

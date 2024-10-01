@@ -90,12 +90,14 @@ namespace RequestViewer.WPF.ViewModels
             DayVMs.Clear();
             OnPropertyChanged(nameof(DayVMs));
 
-            var vms = DayViewModelListCreator.Create(period, new List<Day>(), true, true).ToList();
-            vms.ForEach(vm =>
+            var vms = DayModelListCreator.DayModelsToDayViewModels(
+                DayModelListCreator.Create(period, new List<Day>(), true, true).ToList());
+
+            foreach (var vm in vms)
             {
                 vm.IsOpenChanged += () => OnPropertyChanged(nameof(CanSubmit));
                 DayVMs.Add(vm);
-            });
+            }
         }
     }
 }
