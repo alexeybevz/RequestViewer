@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RequestViewer.BusinessLogic\RequestViewer.BusinessLogic.csproj" />
     <ProjectReference Include="..\RequestViewer.Domain\RequestViewer.Domain.csproj" />
     <ProjectReference Include="..\RequestViewer.EntityFramework\RequestViewer.EntityFramework.csproj" />
   </ItemGroup>

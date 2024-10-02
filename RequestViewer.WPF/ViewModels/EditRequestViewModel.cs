@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using RequestViewer.BusinessLogic.Services;
 using RequestViewer.Domain.Models;
 using RequestViewer.WPF.Commands;
 using RequestViewer.WPF.Services;
@@ -86,7 +87,7 @@ namespace RequestViewer.WPF.ViewModels
             if (request == null)
                 return;
 
-            var vms = DayModelListCreator.DayModelsToDayViewModels(
+            var vms = DayViewModelListCreator.DayModelsToDayViewModels(
                 DayModelListCreator.Create(request.Period, request.Dates, request.IsApproved, true).ToList());
 
             foreach (var vm in vms)
