@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"
               HorizontalAlignment="Center">
-            <Label Content="Выбор дней, доступных для редактирования"
+            <Label Content="Выбор дней для открытия доступа"
                    FontWeight="Bold" />
         </Grid>
         <Grid Grid.Row="1"
