@@ -47,7 +47,7 @@ namespace RequestViewer.EntityFramework.Queries
                     Dates = r.RequestsDays.Select(d => new Day() { Id = d.Id, Date = d.AllowedDate, RequestId = r.Id}).ToList()
                 })
                 .OrderBy(x => x.IsApproved)
-                .ThenBy(x => x.Period.Id)
+                .ThenBy(x => x.Period.StartDate)
                 .ThenBy(x => x.ActiveDirectoryCN)
                 .ToList();
             }

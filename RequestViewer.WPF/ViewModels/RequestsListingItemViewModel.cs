@@ -49,7 +49,7 @@ namespace RequestViewer.WPF.ViewModels
             Request = request;
 
             Name = requestsListingGroupItemViewModel;
-            SortProperty = request.IsApproved + request.ActiveDirectoryCN;
+            SortProperty = request.IsApproved + request.Period.StartDate.ToShortDateString() + request.ActiveDirectoryCN;
 
             EditRequestCommand = new OpenEditRequestCommand(this, requestsStore, modalNavigationStore);
             DeleteRequestCommand = new DeleteRequestCommand(this, requestsStore);
@@ -58,7 +58,7 @@ namespace RequestViewer.WPF.ViewModels
         public void Update(Request request)
         {
             Request = request;
-            SortProperty = request.IsApproved + request.ActiveDirectoryCN;
+            SortProperty = request.IsApproved + request.Period.StartDate.ToShortDateString() + request.ActiveDirectoryCN;
 
             OnPropertyChanged(nameof(Request));
             Name = new RequestsListingGroupItemViewModel(request, _requestsStore);
