@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="RequestViewer.WPF.Components.ChoiceDays"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RequestViewer.WPF.Components"
+             xmlns:loadingSpinnerControl="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              HorizontalAlignment="Center">
+            <Label Content="Выбор дней для открытия доступа"
+                   FontWeight="Bold" />
+        </Grid>
+        <Grid Grid.Row="1"
+              HorizontalAlignment="Left"
+              Margin="5 20 0 0">
+            <local:BaseCheckBox DataContext="{Binding CheckBoxViewModel}" />
+        </Grid>
+        <Grid Grid.Row="2"
+              Width="Auto"
+              Margin="0 20 0 0">
+            <local:DayListing />
+        </Grid>
+        <Grid Grid.Row="3"
+              Margin="0 20 0 0">
+            <StackPanel HorizontalAlignment="Center">
+                <WrapPanel>
+                    <Button Content="Сохранить"
+                            Command="{Binding SubmitCommand}"
+                            IsEnabled="{Binding CanSubmit}"
+                            Style="{StaticResource ApproveButton}" />
+                    <Button Content="Отменить"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource RejectButton}"
+                            Margin="5 0 0 0" />
+                </WrapPanel>
+                <loadingSpinnerControl:LoadingSpinner IsLoading="{Binding IsSubmitting}"
+                                                      Diameter="25"
+                                                      Thickness="2"
+                                                      Margin="0 10 0 0" />
+            </StackPanel>
+        </Grid>
+        <TextBlock Grid.Row="4"
+                   Margin="0 15 0 0"
+                   Style="{StaticResource ErrorMessage}"
+                   Text="{Binding ErrorMessage}"
+                   Visibility="{Binding HasErrorMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    </Grid>
+</UserControl>

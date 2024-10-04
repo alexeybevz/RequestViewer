@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="RequestViewer.WPF.Views.ChoicePeriodView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:RequestViewer.WPF.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="350" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Content="Выбор периода"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center" />
+        </Grid>
+        <Grid Grid.Row="1" Margin="0 20 0 0">
+            <DataGrid x:Name="MainDataGrid"
+                      ItemsSource="{Binding Periods}"
+                      SelectedItem="{Binding SelectedPeriod, Mode=TwoWay}"
+                      IsSynchronizedWithCurrentItem="True"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      ColumnWidth="Auto">
+                <DataGrid.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick"
+                                  Command="{Binding SubmitCommand}" />
+                </DataGrid.InputBindings>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Начало"
+                                        Binding="{Binding StartDate, StringFormat=\{0:dd.MM.yyyy\}}" />
+                    <DataGridTextColumn Header="Окончание"
+                                        Binding="{Binding EndDate, StringFormat=\{0:dd.MM.yyyy\}}" />
+                    <DataGridTextColumn Header="Состояние"
+                                        Binding="{Binding EnabledString}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2"
+              Margin="0 20 0 0">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Content="Подтвердить"
+                        Command="{Binding SubmitCommand}"
+                        IsEnabled="{Binding CanSubmit}"
+                        Style="{StaticResource ApproveButton}" />
+                <Button Content="Отменить"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource RejectButton}"
+                        Margin="5 0 0 0" />
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</UserControl>
