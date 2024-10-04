@@ -58,6 +58,7 @@ namespace RequestViewer.WPF.Stores
 
         private void RequestsStore_RequestUpdated(Request request)
         {
+            ClearSelectedRequest();
             SelectedRequest = request;
         }
 
